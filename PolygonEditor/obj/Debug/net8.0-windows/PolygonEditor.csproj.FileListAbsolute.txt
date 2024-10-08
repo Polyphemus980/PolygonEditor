@@ -1,0 +1,16 @@
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\bin\Debug\net8.0-windows\PolygonEditor.exe
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\bin\Debug\net8.0-windows\PolygonEditor.deps.json
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\bin\Debug\net8.0-windows\PolygonEditor.runtimeconfig.json
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\bin\Debug\net8.0-windows\PolygonEditor.dll
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\bin\Debug\net8.0-windows\PolygonEditor.pdb
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\PolygonEditor.Form1.resources
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\PolygonEditor.csproj.GenerateResource.cache
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\PolygonEditor.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\PolygonEditor.AssemblyInfoInputs.cache
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\PolygonEditor.AssemblyInfo.cs
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\PolygonEditor.csproj.CoreCompileInputs.cache
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\PolygonEditor.dll
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\refint\PolygonEditor.dll
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\PolygonEditor.pdb
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\PolygonEditor.genruntimeconfig.cache
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\ref\PolygonEditor.dll
