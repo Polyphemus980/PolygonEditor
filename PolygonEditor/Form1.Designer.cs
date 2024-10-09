@@ -40,18 +40,18 @@
             polygonToolStripMenuItem = new ToolStripMenuItem();
             newPolygon = new ToolStripMenuItem();
             removePolygon = new ToolStripMenuItem();
+            groupBox1 = new GroupBox();
             EditingPanel.SuspendLayout();
             contextMenu.SuspendLayout();
             menuStrip1.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // EditingPanel
             // 
             EditingPanel.BackColor = SystemColors.ActiveCaptionText;
             EditingPanel.ContextMenuStrip = contextMenu;
-            EditingPanel.Controls.Add(label1);
-            EditingPanel.Controls.Add(radioButton2);
-            EditingPanel.Controls.Add(radioButton1);
+            EditingPanel.Controls.Add(groupBox1);
             EditingPanel.Dock = DockStyle.Fill;
             EditingPanel.Location = new Point(0, 28);
             EditingPanel.Name = "EditingPanel";
@@ -88,7 +88,7 @@
             // 
             label1.AutoSize = true;
             label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(12, 9);
+            label1.Location = new Point(18, 23);
             label1.Name = "label1";
             label1.Size = new Size(185, 20);
             label1.TabIndex = 2;
@@ -98,25 +98,27 @@
             // 
             radioButton2.AutoSize = true;
             radioButton2.ForeColor = SystemColors.ButtonHighlight;
-            radioButton2.Location = new Point(12, 65);
+            radioButton2.Location = new Point(18, 95);
             radioButton2.Name = "radioButton2";
             radioButton2.Size = new Size(144, 24);
             radioButton2.TabIndex = 1;
             radioButton2.TabStop = true;
             radioButton2.Text = "Library algorithm";
             radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
             // 
             // radioButton1
             // 
             radioButton1.AutoSize = true;
             radioButton1.ForeColor = SystemColors.ButtonHighlight;
-            radioButton1.Location = new Point(12, 32);
+            radioButton1.Location = new Point(18, 65);
             radioButton1.Name = "radioButton1";
             radioButton1.Size = new Size(103, 24);
             radioButton1.TabIndex = 0;
             radioButton1.TabStop = true;
             radioButton1.Text = "Bresenham";
             radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
             // 
             // menuStrip1
             // 
@@ -148,6 +150,18 @@
             removePolygon.Size = new Size(146, 26);
             removePolygon.Text = "Remove";
             // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(radioButton2);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Controls.Add(radioButton1);
+            groupBox1.Location = new Point(12, 3);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(250, 125);
+            groupBox1.TabIndex = 3;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "groupBox1";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -159,10 +173,11 @@
             Name = "Form1";
             Text = "Form1";
             EditingPanel.ResumeLayout(false);
-            EditingPanel.PerformLayout();
             contextMenu.ResumeLayout(false);
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -180,5 +195,6 @@
         private Label label1;
         private RadioButton radioButton2;
         private RadioButton radioButton1;
+        private GroupBox groupBox1;
     }
 }

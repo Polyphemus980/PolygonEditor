@@ -9,6 +9,7 @@ namespace PolygonEditor
         public int draggedIndex { get; set; } = -1;
         public bool isDragging { get; set; } = false;
 
+        public Action<Pen, Point, Point> drawingMethod; 
         public Vertex? selectedVertex { get; set; }
         public int vertexCount => vertices.Count;
         public int edgeCount => edges.Count;
@@ -50,14 +51,20 @@ namespace PolygonEditor
             vertices.Remove(selectedVertex);
             selectedVertex = null;
             selectedEdge = null;
-            if (!edges.Any(edge => (edge.start,edge.end) == (neighborSecond, neighborFirst) || (edge.end,edge.start) == (neighborSecond, neighborFirst)))
-                 edges.Add(new Edge(neighborSecond, neighborFirst));
+            if (!edges.Any(edge => (edge.start, edge.end) == (neighborSecond, neighborFirst) || (edge.end, edge.start) == (neighborSecond, neighborFirst)))
+                edges.Add(new Edge(neighborSecond, neighborFirst));
             EditingPanel.Invalidate();
 
         }
 
-        private void drawLineBerenham(Point start, Point end, Graphics g,Brush brush)
+        private void DrawLineLibrary(Point start,Point end,Graphics g,Color color)
         {
+            Pen pen  = new Pen(color,1);
+            g.DrawLine(pen, start, end);
+        }
+        private void drawLineBerenham(Point start, Point end, Graphics g, Color color)
+        {   
+            Brush brush = new SolidBrush(color);
             int x0 = start.X; int y0 = start.Y;
             int x1 = end.X; int y1 = end.Y;
             int dx = Math.Abs(x1 - x0);
@@ -69,7 +76,7 @@ namespace PolygonEditor
                 int err = dx / 2;
                 while (x0 != x1)
                 {
-                    g.FillRectangle(brush, new Rectangle(x0, y0,1,1));
+                    g.FillRectangle(brush, new Rectangle(x0, y0, 1, 1));
                     x0 += stepX;
                     err -= dy;
                     if (err < 0)
@@ -84,7 +91,7 @@ namespace PolygonEditor
                 int err = dy / 2;
                 while (y0 != y1)
                 {
-                    g.FillRectangle(brush, new Rectangle(x0, y0,1,1));
+                    g.FillRectangle(brush, new Rectangle(x0, y0, 1, 1));
                     y0 += stepY;
                     err -= dx;
                     if (err < 0)
@@ -106,8 +113,8 @@ namespace PolygonEditor
         {
             foreach (var edge in edges)
             {
-                Brush edgeBrush = (selectedEdge == edge) ? Brushes.Red : Brushes.Green;
-                drawLineBerenham(edge.start.position, edge.end.position, e.Graphics, edgeBrush);
+                Color drawingColor = (selectedEdge == edge) ? Color.Red : Color.Green;
+                drawLineBerenham(edge.start.position, edge.end.position, e.Graphics, drawingColor);
             }
             foreach (var vertex in vertices)
             {
@@ -172,7 +179,7 @@ namespace PolygonEditor
             }
             Vertex start = selectedEdge.start;
             Vertex end = selectedEdge.end;
-            Vertex mid = new Vertex((start.position.X+end.position.X)/2,(start.position.Y+end.position.Y)/2);
+            Vertex mid = new Vertex((start.position.X + end.position.X) / 2, (start.position.Y + end.position.Y) / 2);
             vertices.Add(mid);
             edges.Add(new Edge(start, mid));
             edges.Add(new Edge(mid, end));
@@ -189,7 +196,7 @@ namespace PolygonEditor
                 {
                     if (selectedVertex == vertices[i])
                         selectedVertex = null;
-                    else 
+                    else
                         selectedVertex = vertices[i];
                     EditingPanel.Invalidate();
                     return;
@@ -210,6 +217,19 @@ namespace PolygonEditor
                     return;
                 }
             }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
