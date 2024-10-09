@@ -9,7 +9,7 @@ namespace PolygonEditor
         public int draggedIndex { get; set; } = -1;
         public bool isDragging { get; set; } = false;
 
-        public Action<Pen, Point, Point> drawingMethod; 
+        public Action<Point, Point, Graphics, Color> drawingMethod { get; set; }
         public Vertex? selectedVertex { get; set; }
         public int vertexCount => vertices.Count;
         public int edgeCount => edges.Count;
@@ -22,7 +22,7 @@ namespace PolygonEditor
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
            | BindingFlags.Instance | BindingFlags.NonPublic, null,
            EditingPanel, new object[] { true });
-
+            drawingMethod = drawLineBerenham;
             int top = EditingPanel.Top;
             int bottom = EditingPanel.Bottom;
             int left = EditingPanel.Left;
@@ -59,7 +59,7 @@ namespace PolygonEditor
 
         private void DrawLineLibrary(Point start,Point end,Graphics g,Color color)
         {
-            Pen pen  = new Pen(color,1);
+            Pen pen  = new Pen(color,5);
             g.DrawLine(pen, start, end);
         }
         private void drawLineBerenham(Point start, Point end, Graphics g, Color color)
@@ -114,7 +114,7 @@ namespace PolygonEditor
             foreach (var edge in edges)
             {
                 Color drawingColor = (selectedEdge == edge) ? Color.Red : Color.Green;
-                drawLineBerenham(edge.start.position, edge.end.position, e.Graphics, drawingColor);
+                drawingMethod(edge.start.position, edge.end.position, e.Graphics, drawingColor);
             }
             foreach (var vertex in vertices)
             {
@@ -223,13 +223,18 @@ namespace PolygonEditor
         {
             if (radioButton1.Checked)
             {
-
+                drawingMethod = drawLineBerenham;
+                EditingPanel.Invalidate();
             }
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (radioButton2.Checked)
+            {
+                drawingMethod = DrawLineLibrary;
+                EditingPanel.Invalidate();
+            }
         }
     }
 }
