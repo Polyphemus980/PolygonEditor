@@ -33,18 +33,25 @@
             contextMenu = new ContextMenuStrip(components);
             addVertexToolStripMenuItem = new ToolStripMenuItem();
             removeVertexToolStripMenuItem = new ToolStripMenuItem();
+            label1 = new Label();
+            radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
             menuStrip1 = new MenuStrip();
             polygonToolStripMenuItem = new ToolStripMenuItem();
             newPolygon = new ToolStripMenuItem();
             removePolygon = new ToolStripMenuItem();
+            EditingPanel.SuspendLayout();
             contextMenu.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // EditingPanel
             // 
-            EditingPanel.BackColor = SystemColors.ActiveCaption;
+            EditingPanel.BackColor = SystemColors.ActiveCaptionText;
             EditingPanel.ContextMenuStrip = contextMenu;
+            EditingPanel.Controls.Add(label1);
+            EditingPanel.Controls.Add(radioButton2);
+            EditingPanel.Controls.Add(radioButton1);
             EditingPanel.Dock = DockStyle.Fill;
             EditingPanel.Location = new Point(0, 28);
             EditingPanel.Name = "EditingPanel";
@@ -75,6 +82,41 @@
             removeVertexToolStripMenuItem.Name = "removeVertexToolStripMenuItem";
             removeVertexToolStripMenuItem.Size = new Size(176, 24);
             removeVertexToolStripMenuItem.Text = "Remove vertex";
+            removeVertexToolStripMenuItem.Click += removeVertex_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.ForeColor = SystemColors.ButtonHighlight;
+            label1.Location = new Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(185, 20);
+            label1.TabIndex = 2;
+            label1.Text = "Choose drawing algorithm";
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.ForeColor = SystemColors.ButtonHighlight;
+            radioButton2.Location = new Point(12, 65);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(144, 24);
+            radioButton2.TabIndex = 1;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "Library algorithm";
+            radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.ForeColor = SystemColors.ButtonHighlight;
+            radioButton1.Location = new Point(12, 32);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(103, 24);
+            radioButton1.TabIndex = 0;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Bresenham";
+            radioButton1.UseVisualStyleBackColor = true;
             // 
             // menuStrip1
             // 
@@ -105,7 +147,6 @@
             removePolygon.Name = "removePolygon";
             removePolygon.Size = new Size(146, 26);
             removePolygon.Text = "Remove";
-            removePolygon.Click += removeVertex_Click;
             // 
             // Form1
             // 
@@ -117,6 +158,8 @@
             MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Form1";
+            EditingPanel.ResumeLayout(false);
+            EditingPanel.PerformLayout();
             contextMenu.ResumeLayout(false);
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
@@ -134,5 +177,8 @@
         private ContextMenuStrip contextMenu;
         private ToolStripMenuItem addVertexToolStripMenuItem;
         private ToolStripMenuItem removeVertexToolStripMenuItem;
+        private Label label1;
+        private RadioButton radioButton2;
+        private RadioButton radioButton1;
     }
 }
