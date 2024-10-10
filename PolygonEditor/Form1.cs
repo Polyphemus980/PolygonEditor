@@ -1,19 +1,37 @@
 using System.Reflection;
 using System.Security.Cryptography.Xml;
 using System.Xml.Linq;
+using System.ComponentModel;
+
 
 namespace PolygonEditor
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form, INotifyPropertyChanged
     {
         public int draggedIndex { get; set; } = -1;
         public bool isDragging { get; set; } = false;
-
+        private Point rightClickPosition;
         public Action<Point, Point, Graphics, Color> drawingMethod { get; set; }
-        public Vertex? selectedVertex { get; set; }
         public int vertexCount => vertices.Count;
         public int edgeCount => edges.Count;
-        public Edge? selectedEdge { get; set; }
+        private Edge? selectedEdge_ = null;
+
+        public Edge? selectedEdge
+        {
+            get => selectedEdge_;
+            set
+            {
+                selectedEdge_ = value;
+                if (value == null)
+                {
+                    constantRadioButton.Checked = false;
+                    verticalRadioButton.Checked = false;
+                    horizontalRadioButton.Checked = false;
+                }
+                OnPropertyChanged(nameof(selectedEdgeNull));
+            }
+        }
+        public bool selectedEdgeNull => selectedEdge != null;
         public List<Vertex> vertices { get; set; } = new List<Vertex>();
         public List<Edge> edges { get; set; } = new List<Edge>();
         public Form1()
@@ -23,6 +41,14 @@ namespace PolygonEditor
            | BindingFlags.Instance | BindingFlags.NonPublic, null,
            EditingPanel, new object[] { true });
             drawingMethod = drawLineBerenham;
+            var binding1 = new Binding("Enabled", this, nameof(selectedEdgeNull), true, DataSourceUpdateMode.OnPropertyChanged);
+            var binding2 = new Binding("Enabled", this, nameof(selectedEdgeNull), true, DataSourceUpdateMode.OnPropertyChanged);
+            var binding3 = new Binding("Enabled", this, nameof(selectedEdgeNull), true, DataSourceUpdateMode.OnPropertyChanged);
+            var binding4 = new Binding("Enabled", this, nameof(selectedEdgeNull), true, DataSourceUpdateMode.OnPropertyChanged);
+            verticalRadioButton.DataBindings.Add(binding1);
+            horizontalRadioButton.DataBindings.Add(binding2);
+            constantRadioButton.DataBindings.Add(binding3);
+            clearButton.DataBindings.Add(binding4);
             int top = EditingPanel.Top;
             int bottom = EditingPanel.Bottom;
             int left = EditingPanel.Left;
@@ -36,11 +62,27 @@ namespace PolygonEditor
             EditingPanel.BorderStyle = BorderStyle.FixedSingle;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private void removeVertex_Click(object sender, EventArgs e)
         {
+            Vertex? selectedVertex = null;
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                if (vertices[i].isNear(rightClickPosition))
+                {
+                    selectedVertex = vertices[i];
+                    break;
+                }
+            }
             if (selectedVertex == null)
             {
-                MessageBox.Show("Must select a vertex to remove", "Error", MessageBoxButtons.OK);
+                MessageBox.Show("Must be near the vertex to be removed", "Error", MessageBoxButtons.OK);
                 return;
             }
             List<Edge> neighborEdges = edges.FindAll(edge => edge.start == selectedVertex || edge.end == selectedVertex);
@@ -57,13 +99,13 @@ namespace PolygonEditor
 
         }
 
-        private void DrawLineLibrary(Point start,Point end,Graphics g,Color color)
+        private void DrawLineLibrary(Point start, Point end, Graphics g, Color color)
         {
-            Pen pen  = new Pen(color,5);
+            Pen pen = new Pen(color, 5);
             g.DrawLine(pen, start, end);
         }
         private void drawLineBerenham(Point start, Point end, Graphics g, Color color)
-        {   
+        {
             Brush brush = new SolidBrush(color);
             int x0 = start.X; int y0 = start.Y;
             int x1 = end.X; int y1 = end.Y;
@@ -118,13 +160,15 @@ namespace PolygonEditor
             }
             foreach (var vertex in vertices)
             {
-                int radius = selectedVertex == vertex ? 10 : 5;
+                int radius = 5;
                 e.Graphics.FillEllipse(Brushes.Red, vertex.position.X - radius, vertex.position.Y - radius, 2 * radius, 2 * radius);
             }
         }
 
         private void EditingPanel_MouseDown(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Right)
+                rightClickPosition = e.Location;
             if (e.Button != MouseButtons.Left)
                 return;
             for (int i = 0; i < vertices.Count; i++)
@@ -190,18 +234,6 @@ namespace PolygonEditor
 
         private void EditingPanel_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            for (int i = 0; i < vertices.Count; i++)
-            {
-                if (vertices[i].isNear(e.Location))
-                {
-                    if (selectedVertex == vertices[i])
-                        selectedVertex = null;
-                    else
-                        selectedVertex = vertices[i];
-                    EditingPanel.Invalidate();
-                    return;
-                }
-            }
             for (int i = 0; i < edges.Count; i++)
             {
                 if (edges[i].IsPointNearEdge(e.Location))
@@ -235,6 +267,48 @@ namespace PolygonEditor
                 drawingMethod = DrawLineLibrary;
                 EditingPanel.Invalidate();
             }
+        }
+
+
+
+        private void VerticalRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (verticalRadioButton.Checked)
+            {
+                selectedEdge.isVertical = true;
+                selectedEdge.isHorizontal = false;
+                selectedEdge.isConstantLength = false;
+            }
+        }
+
+        private void HorizontalRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (horizontalRadioButton.Checked)
+            {
+                selectedEdge.isVertical = false;
+                selectedEdge.isHorizontal = true;
+                selectedEdge.isConstantLength = false;
+            }
+        }
+
+        private void ConstantRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (constantRadioButton.Checked)
+            {
+                selectedEdge.isVertical = false;
+                selectedEdge.isHorizontal = false;
+                selectedEdge.isConstantLength = true;
+            }
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            horizontalRadioButton.Checked = false;
+            constantRadioButton.Checked = false;
+            verticalRadioButton.Checked = false;
+            selectedEdge.isVertical = false;
+            selectedEdge.isHorizontal = false;
+            selectedEdge.isConstantLength=false;
         }
     }
 }

@@ -1,17 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PolygonEditor
 {
-    public class Edge
+    public class Edge:INotifyPropertyChanged
     {
         public Vertex start;
         public Vertex end;
+        private bool isVertical_;
+        public bool isVertical
+        {
+            get => isVertical_;
+            set
+            {
+                    isVertical_ = value;
+            }
+        }
+        private bool isHorizontal_;
+        public bool isHorizontal
+        {
+            get => isHorizontal_;
+            set
+            {
+                isHorizontal_ = value;
+            }
+        }
+        private bool isConstantLength_;
+        public bool isConstantLength
+        {
+            get => isConstantLength_;
+            set
+            {
+                isConstantLength_ = value;
+            }
+        }
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-       public Edge(Vertex start, Vertex end)
+        public Edge(Vertex start, Vertex end)
         {
             this.start = start;
             this.end = end;
