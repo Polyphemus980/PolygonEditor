@@ -91,7 +91,6 @@ namespace PolygonEditor
             edges.Remove(neighborEdges.First());
             edges.Remove(neighborEdges.Last());
             vertices.Remove(selectedVertex);
-            selectedVertex = null;
             selectedEdge = null;
             if (!edges.Any(edge => (edge.start, edge.end) == (neighborSecond, neighborFirst) || (edge.end, edge.start) == (neighborSecond, neighborFirst)))
                 edges.Add(new Edge(neighborSecond, neighborFirst));
@@ -151,17 +150,33 @@ namespace PolygonEditor
             EditingPanel.Invalidate();
         }
 
+        private void WriteConstraints(Edge e,PaintEventArgs p)
+        {
+            int midpointX = (e.start.X + e.end.X) / 2;
+            int midpointY = (e.start.Y + e.end.Y) / 2;
+            Font font = new Font("Arial", 8);
+            Brush brush = Brushes.White;
+            string lengthText = e.length.ToString("0.00");
+            if (e.isVertical)
+                lengthText += "V";
+            else if (e.isHorizontal)
+                lengthText += "H";
+            else if (e.isConstantLength) 
+                lengthText += "C";
+            p.Graphics.DrawString(lengthText, font, brush, new Point(midpointX, midpointY));
+        }
         private void EditingPanel_Paint(object sender, PaintEventArgs e)
         {
             foreach (var edge in edges)
             {
                 Color drawingColor = (selectedEdge == edge) ? Color.Red : Color.Green;
-                drawingMethod(edge.start.position, edge.end.position, e.Graphics, drawingColor);
+                drawingMethod(new Point(edge.start.X,edge.start.Y),new Point(edge.end.X,edge.end.Y), e.Graphics, drawingColor);
+                WriteConstraints(edge, e);
             }
             foreach (var vertex in vertices)
             {
                 int radius = 5;
-                e.Graphics.FillEllipse(Brushes.Red, vertex.position.X - radius, vertex.position.Y - radius, 2 * radius, 2 * radius);
+                e.Graphics.FillEllipse(Brushes.Red, vertex.X - radius, vertex.Y - radius, 2 * radius, 2 * radius);
             }
         }
 
@@ -192,22 +207,28 @@ namespace PolygonEditor
                 Vertex currentVertex = vertices[draggedIndex];
                 if (Control.ModifierKeys == Keys.Control)
                 {
-                    int dx = currentVertex.position.X - e.X;
-                    int dy = currentVertex.position.Y - e.Y;
+                    int dx = currentVertex.X - e.X;
+                    int dy = currentVertex.Y - e.Y;
                     for (int i = 0; i < vertices.Count; i++)
                     {
-                        vertices[i].position.X -= dx;
-                        vertices[i].position.Y -= dy;
+                        vertices[i].X -= dx;
+                        vertices[i].Y -= dy;
                     }
                 }
                 else
                 {
-                    currentVertex.position = new Point(e.X, e.Y);
+                    MoveVertexAPI(currentVertex, e.X, e.Y);
                 }
                 EditingPanel.Invalidate();
             }
         }
-
+        public void MoveVertexAPI(Vertex vertex,int X,int Y)
+        {
+            vertex.X = X;
+            vertex.Y = Y;
+            vertex.MoveVertex(X, Y);
+            vertex.SwappedMoveVertex(X, Y);
+        }
         private void EditingPanel_MouseUp(object sender, MouseEventArgs e)
         {
             isDragging = false;
@@ -223,12 +244,13 @@ namespace PolygonEditor
             }
             Vertex start = selectedEdge.start;
             Vertex end = selectedEdge.end;
-            Vertex mid = new Vertex((start.position.X + end.position.X) / 2, (start.position.Y + end.position.Y) / 2);
+            Vertex mid = new Vertex((start.X + end.X) / 2, (start.Y + end.Y) / 2);
             vertices.Add(mid);
             edges.Add(new Edge(start, mid));
             edges.Add(new Edge(mid, end));
             edges.Remove(selectedEdge);
             selectedEdge = null;
+            textBox1.Text = "";
             EditingPanel.Invalidate();
         }
 
@@ -245,12 +267,33 @@ namespace PolygonEditor
                         return;
                     }
                     selectedEdge = edges[i];
+                    SetButtons();
                     EditingPanel.Invalidate();
                     return;
                 }
             }
         }
-
+        private void SetButtons()
+        {
+            if (selectedEdge.isVertical)
+            {
+                verticalRadioButton.Checked = true;
+            }
+            else if (selectedEdge.isConstantLength)
+            {
+                constantRadioButton.Checked = true;
+            }
+            else if (selectedEdge.isHorizontal)
+            {
+                horizontalRadioButton.Checked = true;
+            }
+            else
+            {
+                horizontalRadioButton.Checked = false;
+                verticalRadioButton.Checked = false;
+                constantRadioButton.Checked = false;
+            }
+        }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton1.Checked)
@@ -269,8 +312,6 @@ namespace PolygonEditor
             }
         }
 
-
-
         private void VerticalRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (verticalRadioButton.Checked)
@@ -278,6 +319,8 @@ namespace PolygonEditor
                 selectedEdge.isVertical = true;
                 selectedEdge.isHorizontal = false;
                 selectedEdge.isConstantLength = false;
+                MoveVertexAPI(selectedEdge.end, selectedEdge.start.X, selectedEdge.end.Y);
+                EditingPanel.Invalidate();
             }
         }
 
@@ -287,28 +330,50 @@ namespace PolygonEditor
             {
                 selectedEdge.isVertical = false;
                 selectedEdge.isHorizontal = true;
+                textBox1.Clear();
+                MoveVertexAPI(selectedEdge.end, selectedEdge.end.X, selectedEdge.start.Y);
+                EditingPanel.Invalidate();
                 selectedEdge.isConstantLength = false;
             }
+
         }
 
         private void ConstantRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (constantRadioButton.Checked)
             {
+                selectedEdge.fixedLength = selectedEdge.length;
                 selectedEdge.isVertical = false;
                 selectedEdge.isHorizontal = false;
+                textBox1.Text = selectedEdge.length.ToString();
                 selectedEdge.isConstantLength = true;
+                EditingPanel.Invalidate();
             }
         }
 
         private void clearButton_Click(object sender, EventArgs e)
         {
+            textBox1.Clear();
             horizontalRadioButton.Checked = false;
             constantRadioButton.Checked = false;
             verticalRadioButton.Checked = false;
             selectedEdge.isVertical = false;
             selectedEdge.isHorizontal = false;
-            selectedEdge.isConstantLength=false;
+            selectedEdge.isConstantLength = false;
+        }
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (String.IsNullOrEmpty(Text) || e.KeyChar != (char)Keys.Enter)
+                return;
+            int length = int.Parse(textBox1.Text);
+            selectedEdge.fixedLength = length;
+            Vertex end = selectedEdge.end;
+            Vertex start = selectedEdge.start;
+            double angle = Math.Atan2(end.Y - start.Y, end.X - start.X);
+            int endX = (int)(start.X + length * Math.Cos(angle));
+            int endY = (int)(start.Y + length * Math.Sin(angle));
+            MoveVertexAPI(end, endX,endY);
+            EditingPanel.Invalidate();
         }
     }
 }

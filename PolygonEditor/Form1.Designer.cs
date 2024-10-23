@@ -42,6 +42,7 @@
             label1 = new Label();
             radioButton1 = new RadioButton();
             groupBox2 = new GroupBox();
+            textBox1 = new TextBox();
             clearButton = new Button();
             constantRadioButton = new RadioButton();
             verticalRadioButton = new RadioButton();
@@ -173,6 +174,7 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(textBox1);
             groupBox2.Controls.Add(clearButton);
             groupBox2.Controls.Add(constantRadioButton);
             groupBox2.Controls.Add(verticalRadioButton);
@@ -185,9 +187,17 @@
             groupBox2.TabIndex = 4;
             groupBox2.TabStop = false;
             // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(161, 114);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(62, 27);
+            textBox1.TabIndex = 5;
+            textBox1.KeyPress += textBox1_KeyPress;
+            // 
             // clearButton
             // 
-            clearButton.Location = new Point(18, 157);
+            clearButton.Location = new Point(18, 147);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(185, 29);
             clearButton.TabIndex = 4;
@@ -314,5 +324,6 @@
         private Label label2;
         private Panel EditingPanel;
         private TableLayoutPanel tableLayoutPanel2;
+        private TextBox textBox1;
     }
 }

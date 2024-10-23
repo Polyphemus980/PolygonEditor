@@ -1,56 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 
 namespace PolygonEditor
 {
-    public class Edge:INotifyPropertyChanged
+    public class Edge
     {
-        public Vertex start;
-        public Vertex end;
-        private bool isVertical_;
-        public bool isVertical
-        {
-            get => isVertical_;
-            set
-            {
-                    isVertical_ = value;
-            }
-        }
-        private bool isHorizontal_;
-        public bool isHorizontal
-        {
-            get => isHorizontal_;
-            set
-            {
-                isHorizontal_ = value;
-            }
-        }
-        private bool isConstantLength_;
-        public bool isConstantLength
-        {
-            get => isConstantLength_;
-            set
-            {
-                isConstantLength_ = value;
-            }
-        }
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public Vertex start { get; set; }
+        public Vertex end { get; set; }
+        public bool isVertical { get; set; }
+        public bool isHorizontal { get; set; }
+        public bool isConstantLength { get; set; }
+
+        public int length => (int)Math.Sqrt(Math.Pow(start.X - end.X,2) + Math.Pow(start.Y - end.Y,2));
+        public int fixedLength = 0;
+        public bool hasConstraint => isVertical || isHorizontal || isConstantLength;
 
         public Edge(Vertex start, Vertex end)
         {
             this.start = start;
             this.end = end;
+            start.edges.Add(this);
+            end.edges.Add(this);
         }
+ 
 
-
+        public Vertex OtherVertex(Vertex v)
+        {
+            return v == start ? end : start;
+        }
         private double DistanceFromPointToLine(Point p, Point start, Point end)
         {
             double numerator = Math.Abs((end.Y - start.Y) * p.X - (end.X - start.X) * p.Y + end.X * start.Y - end.Y * start.X);
@@ -61,10 +45,10 @@ namespace PolygonEditor
         }
         public bool IsPointNearEdge(Point P, int threshold = 5)
         {
-            int x1 = start.position.X;
-            int y1 = start.position.Y;
-            int x2 = end.position.X;
-            int y2 = end.position.Y;
+            int x1 = start.X;
+            int y1 = start.Y;
+            int x2 = end.X;
+            int y2 = end.Y;
 
             int px = P.X;
             int py = P.Y;
@@ -89,19 +73,93 @@ namespace PolygonEditor
     }
     public class  Vertex
     {
-        public Point position;
+        public static int index = 0;
+        public int self_index;
+        public int X;
+        public int Y;
+        public List<Edge> edges = new List<Edge>();
 
         public Vertex(int x, int y)
         {
-            position = new Point(x, y);
+            X = x;
+            Y = y;
+        }
+        public Edge OtherEdge(Edge edge)
+        {
+            return edges[0] == edge ? edges[1] : edges[0];
         }
 
+        public void MoveVertex(int newX, int newY,Edge? comingEdge = null, List<Vertex>? visitedVertices = null)
+        { 
+            visitedVertices ??= new List<Vertex>();
+            if (visitedVertices.Contains(this)) 
+                return;
+            visitedVertices.Add(this);
+            foreach (Edge e in edges)
+            {
+                if (e == comingEdge)
+                    continue;
+                Vertex v = e.OtherVertex(this);
+                if (e.isVertical)
+                {
+                    v.X = newX;
+                    v.MoveVertex(newX, v.Y,e, visitedVertices);
+                }
+                else if (e.isHorizontal)
+                {
+                    v.Y = newY;
+                    v.MoveVertex(v.X, newY,e, visitedVertices);
+                }
+                else if (e.isConstantLength)
+                {
+                    double angle = Math.Atan2(v.Y - Y, v.X - X);
+                    int vX = (int)(X + e.fixedLength * Math.Cos(angle));
+                    int vY = (int)(Y + e.fixedLength * Math.Sin(angle));
+                    v.X = vX;
+                    v.Y = vY;  
+                    v.MoveVertex(vX,vY,e,visitedVertices);
+                }
+            }
+        }
+        public void SwappedMoveVertex(int newX, int newY, List<Vertex> visitedVertices = null)
+        {
+            visitedVertices ??= new List<Vertex>();
+            if (visitedVertices.Contains(this))
+                return;
+            visitedVertices.Add(this);
+            Edge e = edges[1];
+            Vertex v = e.OtherVertex(this);
+            if (e.isVertical)
+            {
+                v.X = newX;
+                v.MoveVertex(newX, v.Y, e,visitedVertices);
+            }
+            else if (e.isHorizontal)
+            {
+                v.Y = newY;
+                v.MoveVertex(v.X, newY,e, visitedVertices);
+            }
+            else if (e.isConstantLength)
+            {
+                double angle = Math.Atan2(v.Y - Y, v.X - X);
+                int vX = (int)(X + e.fixedLength * Math.Cos(angle));
+                int vY = (int)(Y + e.fixedLength * Math.Sin(angle));
+                v.X = vX;
+                v.Y = vY;
+                v.MoveVertex(vX, vY,e, visitedVertices);
+            }
+        }
         public bool isNear(Point mousePosition)
         {
             
-            double radius = Math.Pow(position.X - mousePosition.X, 2) + Math.Pow(position.Y - mousePosition.Y, 2);
-            return radius < 30;
+            double squaredRadius = Math.Pow(X - mousePosition.X, 2) + Math.Pow(Y - mousePosition.Y, 2);
+            return squaredRadius < 30;
         }
+
+        
+        
+       
+
     }
 
 }
