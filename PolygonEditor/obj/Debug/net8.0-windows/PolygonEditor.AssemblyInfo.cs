@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PolygonEditor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1fd3a6a0403cbe3daf600ef3254b4b052d64eab0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+775662466f22cc39d00c266a7afd7f08a12c6cf7")]
 [assembly: System.Reflection.AssemblyProductAttribute("PolygonEditor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PolygonEditor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

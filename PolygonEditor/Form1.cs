@@ -1,8 +1,7 @@
+using System.ComponentModel;
 using System.Reflection;
 using System.Security.Cryptography.Xml;
 using System.Xml.Linq;
-using System.ComponentModel;
-
 
 namespace PolygonEditor
 {
@@ -34,17 +33,46 @@ namespace PolygonEditor
         public bool selectedEdgeNull => selectedEdge != null;
         public List<Vertex> vertices { get; set; } = new List<Vertex>();
         public List<Edge> edges { get; set; } = new List<Edge>();
+
         public Form1()
         {
             InitializeComponent();
-            typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
-           | BindingFlags.Instance | BindingFlags.NonPublic, null,
-           EditingPanel, new object[] { true });
+            typeof(Panel).InvokeMember(
+                "DoubleBuffered",
+                BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                null,
+                EditingPanel,
+                new object[] { true }
+            );
             drawingMethod = drawLineBerenham;
-            var binding1 = new Binding("Enabled", this, nameof(selectedEdgeNull), true, DataSourceUpdateMode.OnPropertyChanged);
-            var binding2 = new Binding("Enabled", this, nameof(selectedEdgeNull), true, DataSourceUpdateMode.OnPropertyChanged);
-            var binding3 = new Binding("Enabled", this, nameof(selectedEdgeNull), true, DataSourceUpdateMode.OnPropertyChanged);
-            var binding4 = new Binding("Enabled", this, nameof(selectedEdgeNull), true, DataSourceUpdateMode.OnPropertyChanged);
+            var binding1 = new Binding(
+                "Enabled",
+                this,
+                nameof(selectedEdgeNull),
+                true,
+                DataSourceUpdateMode.OnPropertyChanged
+            );
+            var binding2 = new Binding(
+                "Enabled",
+                this,
+                nameof(selectedEdgeNull),
+                true,
+                DataSourceUpdateMode.OnPropertyChanged
+            );
+            var binding3 = new Binding(
+                "Enabled",
+                this,
+                nameof(selectedEdgeNull),
+                true,
+                DataSourceUpdateMode.OnPropertyChanged
+            );
+            var binding4 = new Binding(
+                "Enabled",
+                this,
+                nameof(selectedEdgeNull),
+                true,
+                DataSourceUpdateMode.OnPropertyChanged
+            );
             verticalRadioButton.DataBindings.Add(binding1);
             horizontalRadioButton.DataBindings.Add(binding2);
             constantRadioButton.DataBindings.Add(binding3);
@@ -82,20 +110,36 @@ namespace PolygonEditor
             }
             if (selectedVertex == null)
             {
-                MessageBox.Show("Must be near the vertex to be removed", "Error", MessageBoxButtons.OK);
+                MessageBox.Show(
+                    "Must be near the vertex to be removed",
+                    "Error",
+                    MessageBoxButtons.OK
+                );
                 return;
             }
-            List<Edge> neighborEdges = edges.FindAll(edge => edge.start == selectedVertex || edge.end == selectedVertex);
-            Vertex neighborFirst = neighborEdges.First().start == selectedVertex ? neighborEdges.First().end : neighborEdges.First().start;
-            Vertex neighborSecond = neighborEdges.Last().start == selectedVertex ? neighborEdges.Last().end : neighborEdges.Last().start;
+            List<Edge> neighborEdges = edges.FindAll(edge =>
+                edge.start == selectedVertex || edge.end == selectedVertex
+            );
+            Vertex neighborFirst =
+                neighborEdges.First().start == selectedVertex
+                    ? neighborEdges.First().end
+                    : neighborEdges.First().start;
+            Vertex neighborSecond =
+                neighborEdges.Last().start == selectedVertex
+                    ? neighborEdges.Last().end
+                    : neighborEdges.Last().start;
             edges.Remove(neighborEdges.First());
             edges.Remove(neighborEdges.Last());
             vertices.Remove(selectedVertex);
             selectedEdge = null;
-            if (!edges.Any(edge => (edge.start, edge.end) == (neighborSecond, neighborFirst) || (edge.end, edge.start) == (neighborSecond, neighborFirst)))
+            if (
+                !edges.Any(edge =>
+                    (edge.start, edge.end) == (neighborSecond, neighborFirst)
+                    || (edge.end, edge.start) == (neighborSecond, neighborFirst)
+                )
+            )
                 edges.Add(new Edge(neighborSecond, neighborFirst));
             EditingPanel.Invalidate();
-
         }
 
         private void DrawLineLibrary(Point start, Point end, Graphics g, Color color)
@@ -103,11 +147,14 @@ namespace PolygonEditor
             Pen pen = new Pen(color, 5);
             g.DrawLine(pen, start, end);
         }
+
         private void drawLineBerenham(Point start, Point end, Graphics g, Color color)
         {
             Brush brush = new SolidBrush(color);
-            int x0 = start.X; int y0 = start.Y;
-            int x1 = end.X; int y1 = end.Y;
+            int x0 = start.X;
+            int y0 = start.Y;
+            int x1 = end.X;
+            int y1 = end.Y;
             int dx = Math.Abs(x1 - x0);
             int dy = Math.Abs(y1 - y0);
             int stepX = x0 < x1 ? 1 : -1;
@@ -150,7 +197,7 @@ namespace PolygonEditor
             EditingPanel.Invalidate();
         }
 
-        private void WriteConstraints(Edge e,PaintEventArgs p)
+        private void WriteConstraints(Edge e, PaintEventArgs p)
         {
             int midpointX = (e.start.X + e.end.X) / 2;
             int midpointY = (e.start.Y + e.end.Y) / 2;
@@ -161,22 +208,34 @@ namespace PolygonEditor
                 lengthText += "V";
             else if (e.isHorizontal)
                 lengthText += "H";
-            else if (e.isConstantLength) 
+            else if (e.isConstantLength)
                 lengthText += "C";
             p.Graphics.DrawString(lengthText, font, brush, new Point(midpointX, midpointY));
         }
+
         private void EditingPanel_Paint(object sender, PaintEventArgs e)
         {
             foreach (var edge in edges)
             {
                 Color drawingColor = (selectedEdge == edge) ? Color.Red : Color.Green;
-                drawingMethod(new Point(edge.start.X,edge.start.Y),new Point(edge.end.X,edge.end.Y), e.Graphics, drawingColor);
+                drawingMethod(
+                    new Point(edge.start.X, edge.start.Y),
+                    new Point(edge.end.X, edge.end.Y),
+                    e.Graphics,
+                    drawingColor
+                );
                 WriteConstraints(edge, e);
             }
             foreach (var vertex in vertices)
             {
                 int radius = 5;
-                e.Graphics.FillEllipse(Brushes.Red, vertex.X - radius, vertex.Y - radius, 2 * radius, 2 * radius);
+                e.Graphics.FillEllipse(
+                    Brushes.Red,
+                    vertex.X - radius,
+                    vertex.Y - radius,
+                    2 * radius,
+                    2 * radius
+                );
             }
         }
 
@@ -190,7 +249,6 @@ namespace PolygonEditor
             {
                 if (vertices[i].isNear(e.Location))
                 {
-
                     draggedIndex = i;
                     isDragging = true;
                     EditingPanel.Invalidate();
@@ -198,7 +256,6 @@ namespace PolygonEditor
                 }
             }
         }
-
 
         private void EditingPanel_MouseMove(object sender, MouseEventArgs e)
         {
@@ -222,13 +279,17 @@ namespace PolygonEditor
                 EditingPanel.Invalidate();
             }
         }
-        public void MoveVertexAPI(Vertex vertex,int X,int Y)
+
+        public void MoveVertexAPI(Vertex vertex, int X, int Y)
         {
+            //vertex.MoveVertexIteratively(X, Y, true);
+            //vertex.MoveVertexIteratively(X, Y, false);
             vertex.X = X;
             vertex.Y = Y;
             vertex.MoveVertex(X, Y);
             vertex.SwappedMoveVertex(X, Y);
         }
+
         private void EditingPanel_MouseUp(object sender, MouseEventArgs e)
         {
             isDragging = false;
@@ -249,6 +310,8 @@ namespace PolygonEditor
             edges.Add(new Edge(start, mid));
             edges.Add(new Edge(mid, end));
             edges.Remove(selectedEdge);
+            start.edges.Remove(selectedEdge);
+            end.edges.Remove(selectedEdge);
             selectedEdge = null;
             textBox1.Text = "";
             EditingPanel.Invalidate();
@@ -273,6 +336,7 @@ namespace PolygonEditor
                 }
             }
         }
+
         private void SetButtons()
         {
             if (selectedEdge.isVertical)
@@ -294,6 +358,7 @@ namespace PolygonEditor
                 constantRadioButton.Checked = false;
             }
         }
+
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton1.Checked)
@@ -335,7 +400,6 @@ namespace PolygonEditor
                 EditingPanel.Invalidate();
                 selectedEdge.isConstantLength = false;
             }
-
         }
 
         private void ConstantRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -361,6 +425,7 @@ namespace PolygonEditor
             selectedEdge.isHorizontal = false;
             selectedEdge.isConstantLength = false;
         }
+
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (String.IsNullOrEmpty(Text) || e.KeyChar != (char)Keys.Enter)
@@ -372,7 +437,7 @@ namespace PolygonEditor
             double angle = Math.Atan2(end.Y - start.Y, end.X - start.X);
             int endX = (int)(start.X + length * Math.Cos(angle));
             int endY = (int)(start.Y + length * Math.Sin(angle));
-            MoveVertexAPI(end, endX,endY);
+            MoveVertexAPI(end, endX, endY);
             EditingPanel.Invalidate();
         }
     }

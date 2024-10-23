@@ -18,7 +18,8 @@ namespace PolygonEditor
         public bool isHorizontal { get; set; }
         public bool isConstantLength { get; set; }
 
-        public int length => (int)Math.Sqrt(Math.Pow(start.X - end.X,2) + Math.Pow(start.Y - end.Y,2));
+        public int length =>
+            (int)Math.Sqrt(Math.Pow(start.X - end.X, 2) + Math.Pow(start.Y - end.Y, 2));
         public int fixedLength = 0;
         public bool hasConstraint => isVertical || isHorizontal || isConstantLength;
 
@@ -29,20 +30,27 @@ namespace PolygonEditor
             start.edges.Add(this);
             end.edges.Add(this);
         }
- 
 
         public Vertex OtherVertex(Vertex v)
         {
             return v == start ? end : start;
         }
+
         private double DistanceFromPointToLine(Point p, Point start, Point end)
         {
-            double numerator = Math.Abs((end.Y - start.Y) * p.X - (end.X - start.X) * p.Y + end.X * start.Y - end.Y * start.X);
-            double denominator = Math.Sqrt(Math.Pow(end.Y - start.Y, 2) + Math.Pow(end.X - start.X, 2));
-          
+            double numerator = Math.Abs(
+                (end.Y - start.Y) * p.X
+                    - (end.X - start.X) * p.Y
+                    + end.X * start.Y
+                    - end.Y * start.X
+            );
+            double denominator = Math.Sqrt(
+                Math.Pow(end.Y - start.Y, 2) + Math.Pow(end.X - start.X, 2)
+            );
+
             return numerator / denominator;
-           
         }
+
         public bool IsPointNearEdge(Point P, int threshold = 5)
         {
             int x1 = start.X;
@@ -53,7 +61,7 @@ namespace PolygonEditor
             int px = P.X;
             int py = P.Y;
 
-            int dx = x2 - x1; 
+            int dx = x2 - x1;
             int dy = y2 - y1;
             int apx = px - x1;
             int apy = py - y1;
@@ -71,7 +79,8 @@ namespace PolygonEditor
             return distSq < threshold * threshold;
         }
     }
-    public class  Vertex
+
+    public class Vertex
     {
         public static int index = 0;
         public int self_index;
@@ -84,31 +93,35 @@ namespace PolygonEditor
             X = x;
             Y = y;
         }
+
         public Edge OtherEdge(Edge edge)
         {
             return edges[0] == edge ? edges[1] : edges[0];
         }
 
-        public void MoveVertex(int newX, int newY,Edge? comingEdge = null, List<Vertex>? visitedVertices = null)
-        { 
+        public void MoveVertex(
+            int newX,
+            int newY,
+            Edge? comingEdge = null,
+            List<Vertex>? visitedVertices = null
+        )
+        {
             visitedVertices ??= new List<Vertex>();
-            if (visitedVertices.Contains(this)) 
+            if (visitedVertices.Contains(this))
                 return;
             visitedVertices.Add(this);
             foreach (Edge e in edges)
             {
-                if (e == comingEdge)
-                    continue;
                 Vertex v = e.OtherVertex(this);
                 if (e.isVertical)
                 {
                     v.X = newX;
-                    v.MoveVertex(newX, v.Y,e, visitedVertices);
+                    v.MoveVertex(newX, v.Y, e, visitedVertices);
                 }
                 else if (e.isHorizontal)
                 {
                     v.Y = newY;
-                    v.MoveVertex(v.X, newY,e, visitedVertices);
+                    v.MoveVertex(v.X, newY, e, visitedVertices);
                 }
                 else if (e.isConstantLength)
                 {
@@ -116,11 +129,45 @@ namespace PolygonEditor
                     int vX = (int)(X + e.fixedLength * Math.Cos(angle));
                     int vY = (int)(Y + e.fixedLength * Math.Sin(angle));
                     v.X = vX;
-                    v.Y = vY;  
-                    v.MoveVertex(vX,vY,e,visitedVertices);
+                    v.Y = vY;
+                    v.MoveVertex(vX, vY, e, visitedVertices);
                 }
             }
         }
+
+        public void MoveVertexIteratively(int newX, int newY, bool direction)
+        {
+            X = newX;
+            Y = newY;
+            Vertex? prev = this;
+            Vertex v = direction ? edges[0].OtherVertex(this) : edges[1].OtherVertex(this);
+            Edge e = direction ? edges[0] : edges[1];
+            while (v != this)
+            {
+                if (e.isVertical)
+                {
+                    v.X = prev.X;
+                }
+                else if (e.isHorizontal)
+                {
+                    v.Y = prev.Y;
+                }
+                else if (e.isConstantLength)
+                {
+                    double angle = Math.Atan2(v.Y - prev.Y, v.X - prev.X);
+                    int vX = (int)(prev.X + e.fixedLength * Math.Cos(angle));
+                    int vY = (int)(prev.Y + e.fixedLength * Math.Sin(angle));
+                    v.X = vX;
+                    v.Y = vY;
+                }
+                else
+                    return;
+                e = v.OtherEdge(e);
+                prev = v;
+                v = e.OtherVertex(v);
+            }
+        }
+
         public void SwappedMoveVertex(int newX, int newY, List<Vertex> visitedVertices = null)
         {
             visitedVertices ??= new List<Vertex>();
@@ -132,12 +179,12 @@ namespace PolygonEditor
             if (e.isVertical)
             {
                 v.X = newX;
-                v.MoveVertex(newX, v.Y, e,visitedVertices);
+                v.MoveVertex(newX, v.Y, e, visitedVertices);
             }
             else if (e.isHorizontal)
             {
                 v.Y = newY;
-                v.MoveVertex(v.X, newY,e, visitedVertices);
+                v.MoveVertex(v.X, newY, e, visitedVertices);
             }
             else if (e.isConstantLength)
             {
@@ -146,20 +193,15 @@ namespace PolygonEditor
                 int vY = (int)(Y + e.fixedLength * Math.Sin(angle));
                 v.X = vX;
                 v.Y = vY;
-                v.MoveVertex(vX, vY,e, visitedVertices);
+                v.MoveVertex(vX, vY, e, visitedVertices);
             }
         }
+
         public bool isNear(Point mousePosition)
         {
-            
-            double squaredRadius = Math.Pow(X - mousePosition.X, 2) + Math.Pow(Y - mousePosition.Y, 2);
+            double squaredRadius =
+                Math.Pow(X - mousePosition.X, 2) + Math.Pow(Y - mousePosition.Y, 2);
             return squaredRadius < 30;
         }
-
-        
-        
-       
-
     }
-
 }
