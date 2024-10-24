@@ -38,10 +38,11 @@
             removePolygon = new ToolStripMenuItem();
             tableLayoutPanel1 = new TableLayoutPanel();
             groupBox1 = new GroupBox();
-            radioButton2 = new RadioButton();
+            LibraryButton = new RadioButton();
             label1 = new Label();
-            radioButton1 = new RadioButton();
+            BresenhamButton = new RadioButton();
             groupBox2 = new GroupBox();
+            bezierRadioButton = new RadioButton();
             textBox1 = new TextBox();
             clearButton = new Button();
             constantRadioButton = new RadioButton();
@@ -63,7 +64,7 @@
             contextMenu.ImageScalingSize = new Size(20, 20);
             contextMenu.Items.AddRange(new ToolStripItem[] { addVertexToolStripMenuItem, removeVertexToolStripMenuItem });
             contextMenu.Name = "contextMenu";
-            contextMenu.Size = new Size(229, 52);
+            contextMenu.Size = new Size(229, 80);
             // 
             // addVertexToolStripMenuItem
             // 
@@ -126,9 +127,9 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(radioButton2);
+            groupBox1.Controls.Add(LibraryButton);
             groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(radioButton1);
+            groupBox1.Controls.Add(BresenhamButton);
             groupBox1.Dock = DockStyle.Fill;
             groupBox1.Location = new Point(3, 3);
             groupBox1.Name = "groupBox1";
@@ -136,17 +137,17 @@
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             // 
-            // radioButton2
+            // LibraryButton
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.ForeColor = SystemColors.ActiveCaptionText;
-            radioButton2.Location = new Point(18, 95);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(144, 24);
-            radioButton2.TabIndex = 1;
-            radioButton2.Text = "Library algorithm";
-            radioButton2.UseVisualStyleBackColor = true;
-            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
+            LibraryButton.AutoSize = true;
+            LibraryButton.ForeColor = SystemColors.ActiveCaptionText;
+            LibraryButton.Location = new Point(18, 95);
+            LibraryButton.Name = "LibraryButton";
+            LibraryButton.Size = new Size(144, 24);
+            LibraryButton.TabIndex = 1;
+            LibraryButton.Text = "Library algorithm";
+            LibraryButton.UseVisualStyleBackColor = true;
+            LibraryButton.CheckedChanged += libraryButton_CheckedChanged;
             // 
             // label1
             // 
@@ -158,22 +159,23 @@
             label1.TabIndex = 2;
             label1.Text = "Choose drawing algorithm";
             // 
-            // radioButton1
+            // BresenhamButton
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Checked = true;
-            radioButton1.ForeColor = SystemColors.ActiveCaptionText;
-            radioButton1.Location = new Point(18, 65);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(103, 24);
-            radioButton1.TabIndex = 0;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Bresenham";
-            radioButton1.UseVisualStyleBackColor = true;
-            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
+            BresenhamButton.AutoSize = true;
+            BresenhamButton.Checked = true;
+            BresenhamButton.ForeColor = SystemColors.ActiveCaptionText;
+            BresenhamButton.Location = new Point(18, 65);
+            BresenhamButton.Name = "BresenhamButton";
+            BresenhamButton.Size = new Size(103, 24);
+            BresenhamButton.TabIndex = 0;
+            BresenhamButton.TabStop = true;
+            BresenhamButton.Text = "Bresenham";
+            BresenhamButton.UseVisualStyleBackColor = true;
+            BresenhamButton.CheckedChanged += bresenhamButton_CheckedChanged;
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(bezierRadioButton);
             groupBox2.Controls.Add(textBox1);
             groupBox2.Controls.Add(clearButton);
             groupBox2.Controls.Add(constantRadioButton);
@@ -187,6 +189,18 @@
             groupBox2.TabIndex = 4;
             groupBox2.TabStop = false;
             // 
+            // bezierRadioButton
+            // 
+            bezierRadioButton.AutoSize = true;
+            bezierRadioButton.Location = new Point(18, 145);
+            bezierRadioButton.Name = "bezierRadioButton";
+            bezierRadioButton.Size = new Size(71, 24);
+            bezierRadioButton.TabIndex = 6;
+            bezierRadioButton.TabStop = true;
+            bezierRadioButton.Text = "Bezier";
+            bezierRadioButton.UseVisualStyleBackColor = true;
+            bezierRadioButton.CheckedChanged += bezierRadioButton_CheckedChanged;
+            // 
             // textBox1
             // 
             textBox1.Location = new Point(161, 114);
@@ -197,7 +211,7 @@
             // 
             // clearButton
             // 
-            clearButton.Location = new Point(18, 147);
+            clearButton.Location = new Point(18, 175);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(185, 29);
             clearButton.TabIndex = 4;
@@ -215,7 +229,7 @@
             constantRadioButton.TabStop = true;
             constantRadioButton.Text = "Constant Length";
             constantRadioButton.UseVisualStyleBackColor = true;
-            constantRadioButton.CheckedChanged += ConstantRadioButton_CheckedChanged;
+            constantRadioButton.CheckedChanged += constantRadioButton_CheckedChanged;
             // 
             // verticalRadioButton
             // 
@@ -227,7 +241,7 @@
             verticalRadioButton.TabStop = true;
             verticalRadioButton.Text = "Vertical";
             verticalRadioButton.UseVisualStyleBackColor = true;
-            verticalRadioButton.CheckedChanged += VerticalRadioButton_CheckedChanged;
+            verticalRadioButton.CheckedChanged += verticalRadioButton_CheckedChanged;
             // 
             // horizontalRadioButton
             // 
@@ -239,7 +253,7 @@
             horizontalRadioButton.TabStop = true;
             horizontalRadioButton.Text = "Horizontal";
             horizontalRadioButton.UseVisualStyleBackColor = true;
-            horizontalRadioButton.CheckedChanged += HorizontalRadioButton_CheckedChanged;
+            horizontalRadioButton.CheckedChanged += horizontalRadioButton_CheckedChanged;
             // 
             // label2
             // 
@@ -313,9 +327,9 @@
         private ToolStripMenuItem removeVertexToolStripMenuItem;
         private TableLayoutPanel tableLayoutPanel1;
         private GroupBox groupBox1;
-        private RadioButton radioButton2;
+        private RadioButton LibraryButton;
         private Label label1;
-        private RadioButton radioButton1;
+        private RadioButton BresenhamButton;
         private GroupBox groupBox2;
         private Button clearButton;
         private RadioButton constantRadioButton;
@@ -325,5 +339,6 @@
         private Panel EditingPanel;
         private TableLayoutPanel tableLayoutPanel2;
         private TextBox textBox1;
+        private RadioButton bezierRadioButton;
     }
 }
