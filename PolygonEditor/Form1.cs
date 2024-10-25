@@ -7,13 +7,9 @@ namespace PolygonEditor
 {
     public partial class Form1 : Form, INotifyPropertyChanged
     {
-        public int draggedIndex { get; set; } = -1;
-        public bool isDragging { get; set; } = false;
-        private Point rightClickPosition;
         public int vertexCount => vertices.Count;
         public int edgeCount => edges.Count;
         private Edge? selectedEdge_ = null;
-
         public Edge? selectedEdge
         {
             get => selectedEdge_;
@@ -127,6 +123,12 @@ namespace PolygonEditor
             int endY = (int)(start.Y + length * Math.Sin(angle));
             MoveVertexAPI(end, endX, endY);
             EditingPanel.Invalidate();
+        }
+
+        public bool IsNear(int p1x, int p1y, int p2x, int p2y)
+        {
+            double squaredRadius = Math.Pow(p1y - p2y, 2) + Math.Pow(p1y - p2y, 2);
+            return squaredRadius < 30;
         }
     }
 }

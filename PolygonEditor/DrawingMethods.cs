@@ -88,6 +88,24 @@ namespace PolygonEditor
                     drawingColor
                 );
                 WriteConstraints(edge, e);
+                if (edge.p1 != null && edge.p2 != null)
+                {
+                    int radius = 5;
+                    e.Graphics.FillEllipse(
+                        Brushes.Pink,
+                        edge.p1.X - radius,
+                        edge.p1.Y - radius,
+                        2 * radius,
+                        2 * radius
+                    );
+                    e.Graphics.FillEllipse(
+                        Brushes.Pink,
+                        edge.p2.X - radius,
+                        edge.p2.Y - radius,
+                        2 * radius,
+                        2 * radius
+                    );
+                }
             }
             foreach (var vertex in vertices)
             {

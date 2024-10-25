@@ -8,6 +8,14 @@ namespace PolygonEditor
 {
     partial class Form1 : Form
     {
+        public int draggedIndex { get; set; } = -1;
+        public bool isDragging { get; set; } = false;
+
+        private Point rightClickPosition;
+
+        public BezierControlPoint draggedBezier { get; set; } = null;
+        public bool isDraggingBezier { get; set; } = false;
+
         private void EditingPanel_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -20,7 +28,23 @@ namespace PolygonEditor
                 {
                     draggedIndex = i;
                     isDragging = true;
-                    EditingPanel.Invalidate();
+                    return;
+                }
+            }
+            for (int i = 0; i < edges.Count; i++)
+            {
+                if (edges[i].p1 == null || edges[i].p2 == null)
+                    continue;
+                if (IsNear(edges[i].p1.X, edges[i].p1.Y, e.X, e.Y))
+                {
+                    draggedBezier = edges[i].p1;
+                    isDraggingBezier = true;
+                    return;
+                }
+                else if (IsNear(edges[i].p2.X, edges[i].p2.Y, e.X, e.Y))
+                {
+                    draggedBezier = edges[i].p2;
+                    isDraggingBezier = true;
                     return;
                 }
             }
@@ -47,6 +71,12 @@ namespace PolygonEditor
                 }
                 EditingPanel.Invalidate();
             }
+            else if (isDraggingBezier)
+            {
+                draggedBezier.X = e.X;
+                draggedBezier.Y = e.Y;
+                EditingPanel.Invalidate();
+            }
         }
 
         public void MoveVertexAPI(Vertex vertex, int X, int Y)
@@ -59,6 +89,8 @@ namespace PolygonEditor
         {
             isDragging = false;
             draggedIndex = -1;
+            isDraggingBezier = false;
+            draggedBezier = null;
         }
     }
 }
