@@ -40,6 +40,7 @@ namespace PolygonEditor
                 new object[] { true }
             );
             drawingMethod = drawLineBerenham;
+            drawingBezierMethod = DrawBezier;
             SetBinding(verticalRadioButton);
             SetBinding(horizontalRadioButton);
             SetBinding(constantRadioButton);

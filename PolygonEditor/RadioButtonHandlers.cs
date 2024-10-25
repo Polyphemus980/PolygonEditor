@@ -30,8 +30,11 @@ namespace PolygonEditor
         {
             selectedEdge.constraint = constraint;
             textBox1.Clear();
-            selectedEdge.p1 = null;
-            selectedEdge.p2 = null;
+            if (selectedEdge.constraint != EdgeConstraint.Bezier)
+            {
+                selectedEdge.p1 = null;
+                selectedEdge.p2 = null;
+            }
 
             switch (constraint)
             {
@@ -49,10 +52,18 @@ namespace PolygonEditor
                     break;
 
                 case EdgeConstraint.Bezier:
-                    int pos1X = (selectedEdge.start.X + selectedEdge.end.X) / 2 - 20;
-                    int pos1Y = (selectedEdge.start.Y + selectedEdge.end.Y) / 2 - 50;
-                    int pos2X = (selectedEdge.start.X + selectedEdge.end.X) / 2 + 50;
-                    int pos2Y = (selectedEdge.start.Y + selectedEdge.end.Y) / 2 + 20;
+                    int pos1X =
+                        (selectedEdge.start.X + selectedEdge.end.X) / 2
+                        - Math.Min(20, selectedEdge.length / 3);
+                    int pos1Y =
+                        (selectedEdge.start.Y + selectedEdge.end.Y) / 2
+                        - Math.Min(20, selectedEdge.length / 3);
+                    int pos2X =
+                        (selectedEdge.start.X + selectedEdge.end.X) / 2
+                        + Math.Min(selectedEdge.length / 3, 20);
+                    int pos2Y =
+                        (selectedEdge.start.Y + selectedEdge.end.Y) / 2
+                        + Math.Min(20, selectedEdge.length / 3);
                     selectedEdge.p1 = new BezierControlPoint(pos1X, pos1Y);
                     selectedEdge.p2 = new BezierControlPoint(pos2X, pos2Y);
                     break;
