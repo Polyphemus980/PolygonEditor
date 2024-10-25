@@ -67,11 +67,11 @@ namespace PolygonEditor
             Font font = new Font("Arial", 8);
             Brush brush = Brushes.White;
             string lengthText = e.length.ToString("0.00");
-            if (e.isVertical)
+            if (e.constraint == EdgeConstraint.Vertical)
                 lengthText += "V";
-            else if (e.isHorizontal)
+            else if (e.constraint == EdgeConstraint.Horizontal)
                 lengthText += "H";
-            else if (e.isConstantLength)
+            else if (e.constraint == EdgeConstraint.ConstantLength)
                 lengthText += "C";
             p.Graphics.DrawString(lengthText, font, brush, new Point(midpointX, midpointY));
         }

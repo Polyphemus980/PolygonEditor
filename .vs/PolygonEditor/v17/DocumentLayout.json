@@ -3,24 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|C:\\Users\\aleks\\source\\repos\\PolygonEditor\\polygoneditor\\radiobuttonhandlers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|solutionrelative:polygoneditor\\radiobuttonhandlers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|C:\\Users\\aleks\\source\\repos\\PolygonEditor\\polygoneditor\\edge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|solutionrelative:polygoneditor\\edge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|c:\\users\\aleks\\source\\repos\\polygoneditor\\polygoneditor\\movinghandlers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|solutionrelative:polygoneditor\\movinghandlers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|C:\\Users\\aleks\\source\\repos\\PolygonEditor\\polygoneditor\\drawingmethods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|c:\\users\\aleks\\source\\repos\\polygoneditor\\polygoneditor\\drawingmethods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|solutionrelative:polygoneditor\\drawingmethods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|c:\\users\\aleks\\source\\repos\\polygoneditor\\polygoneditor\\beziercontrolpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|solutionrelative:polygoneditor\\beziercontrolpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|C:\\Users\\aleks\\source\\repos\\PolygonEditor\\polygoneditor\\movinghandlers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|solutionrelative:polygoneditor\\movinghandlers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|C:\\Users\\aleks\\source\\repos\\PolygonEditor\\polygoneditor\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,6 +17,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|C:\\Users\\aleks\\source\\repos\\PolygonEditor\\polygoneditor\\vertex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|solutionrelative:polygoneditor\\vertex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|c:\\users\\aleks\\source\\repos\\polygoneditor\\polygoneditor\\radiobuttonhandlers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|solutionrelative:polygoneditor\\radiobuttonhandlers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|C:\\Users\\aleks\\source\\repos\\PolygonEditor\\polygoneditor\\edge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E3662CB-31DA-4A38-B1D3-189C748F5341}|PolygonEditor\\PolygonEditor.csproj|solutionrelative:polygoneditor\\edge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,33 +42,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "BezierControlPoint.cs",
-              "DocumentMoniker": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\BezierControlPoint.cs",
-              "RelativeDocumentMoniker": "PolygonEditor\\BezierControlPoint.cs",
-              "ToolTip": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\BezierControlPoint.cs",
-              "RelativeToolTip": "PolygonEditor\\BezierControlPoint.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAiAAAA",
+              "DocumentIndex": 0,
+              "Title": "DrawingMethods.cs",
+              "DocumentMoniker": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\DrawingMethods.cs",
+              "RelativeDocumentMoniker": "PolygonEditor\\DrawingMethods.cs",
+              "ToolTip": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\DrawingMethods.cs",
+              "RelativeToolTip": "PolygonEditor\\DrawingMethods.cs",
+              "ViewState": "AQIAADgAAAAAAAAAAAAtwEoAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-25T12:32:46.659Z",
+              "WhenOpened": "2024-10-25T14:04:23.239Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "MovingHandlers.cs",
               "DocumentMoniker": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\MovingHandlers.cs",
               "RelativeDocumentMoniker": "PolygonEditor\\MovingHandlers.cs",
               "ToolTip": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\MovingHandlers.cs",
               "RelativeToolTip": "PolygonEditor\\MovingHandlers.cs",
-              "ViewState": "AQIAADUAAAAAAAAAAAAswCQAAAAdAAAA",
+              "ViewState": "AQIAAFUAAAAAAAAAAAAwwCQAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-24T21:12:50.821Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\Form1.cs",
               "RelativeDocumentMoniker": "PolygonEditor\\Form1.cs",
@@ -86,51 +82,38 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "DrawingMethods.cs",
-              "DocumentMoniker": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\DrawingMethods.cs",
-              "RelativeDocumentMoniker": "PolygonEditor\\DrawingMethods.cs",
-              "ToolTip": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\DrawingMethods.cs",
-              "RelativeToolTip": "PolygonEditor\\DrawingMethods.cs",
-              "ViewState": "AQIAAFUAAAAAAAAAAAAtwF4AAAAkAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-24T20:50:57.337Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "Vertex.cs",
               "DocumentMoniker": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\Vertex.cs",
               "RelativeDocumentMoniker": "PolygonEditor\\Vertex.cs",
               "ToolTip": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\Vertex.cs",
               "RelativeToolTip": "PolygonEditor\\Vertex.cs",
-              "ViewState": "AQIAACwAAAAAAAAAAAAgwD0AAAAJAAAA",
+              "ViewState": "AQIAADkAAAAAAAAAAAAtwCQAAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-24T20:09:30.436Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "RadioButtonHandlers.cs",
               "DocumentMoniker": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\RadioButtonHandlers.cs",
               "RelativeDocumentMoniker": "PolygonEditor\\RadioButtonHandlers.cs",
               "ToolTip": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\RadioButtonHandlers.cs",
               "RelativeToolTip": "PolygonEditor\\RadioButtonHandlers.cs",
-              "ViewState": "AQIAAD4AAAAAAAAAAAAowCgAAAAOAAAA",
+              "ViewState": "AQIAADMAAAAAAAAAAAAtwF8AAAA5AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-24T19:33:40.921Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "Edge.cs",
               "DocumentMoniker": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\Edge.cs",
               "RelativeDocumentMoniker": "PolygonEditor\\Edge.cs",
               "ToolTip": "C:\\Users\\aleks\\source\\repos\\PolygonEditor\\PolygonEditor\\Edge.cs",
               "RelativeToolTip": "PolygonEditor\\Edge.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAABQAAAApAAAA",
+              "ViewState": "AQIAABYAAAAAAAAAAAAEwB4AAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-08T19:51:01.107Z",
               "EditorCaption": ""

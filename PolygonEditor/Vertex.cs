@@ -34,15 +34,15 @@ namespace PolygonEditor
             Edge e = direction ? edges[0] : edges[1];
             while (v != this)
             {
-                if (e.isVertical)
+                if (e.constraint == EdgeConstraint.Vertical)
                 {
                     v.X = prev.X;
                 }
-                else if (e.isHorizontal)
+                else if (e.constraint == EdgeConstraint.Horizontal)
                 {
                     v.Y = prev.Y;
                 }
-                else if (e.isConstantLength)
+                else if (e.constraint == EdgeConstraint.ConstantLength)
                 {
                     double angle = Math.Atan2(v.Y - prev.Y, v.X - prev.X);
                     int vX = (int)(prev.X + e.fixedLength * Math.Cos(angle));

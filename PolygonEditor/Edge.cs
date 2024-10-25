@@ -10,21 +10,25 @@ using System.Windows.Forms.VisualStyles;
 
 namespace PolygonEditor
 {
+    public enum EdgeConstraint
+    {
+        None,
+        Vertical,
+        Horizontal,
+        ConstantLength,
+        Bezier,
+    }
+
     public class Edge
     {
         public Vertex start { get; set; }
         public Vertex end { get; set; }
-        public bool isVertical { get; set; }
-        public bool isHorizontal { get; set; }
-        public bool isConstantLength { get; set; }
-
-        public bool isBezier { get; set; }
+        public EdgeConstraint constraint { get; set; }
         public BezierControlPoint? p1 { get; set; } = null;
         public BezierControlPoint? p2 { get; set; } = null;
         public int length =>
             (int)Math.Sqrt(Math.Pow(start.X - end.X, 2) + Math.Pow(start.Y - end.Y, 2));
         public int fixedLength = 0;
-        public bool hasConstraint => isVertical || isHorizontal || isConstantLength;
 
         public Edge(Vertex start, Vertex end)
         {
