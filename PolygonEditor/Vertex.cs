@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace PolygonEditor
 {
+    public enum VertexConstraint
+    {
+        G0,
+        G1,
+        C1,
+    }
+
     public class Vertex
     {
         public static int index = 0;
@@ -13,9 +20,11 @@ namespace PolygonEditor
         public int X;
         public int Y;
         public List<Edge> edges = new List<Edge>();
+        public VertexConstraint constraint;
 
         public Vertex(int x, int y)
         {
+            constraint = VertexConstraint.G0;
             X = x;
             Y = y;
         }
@@ -50,8 +59,25 @@ namespace PolygonEditor
                     v.X = vX;
                     v.Y = vY;
                 }
-                else
+                if (prev.constraint == VertexConstraint.G1)
+                {
+                    Edge other = OtherEdge(e);
+                    if (other.p1 == null || other.p2 == null)
+                        return;
+                    BezierControlPoint adjustedPoint = other.p1;
+                    //Distance(X, Y, other.p1.X, other.p1.Y)
+                    //> Distance(X, Y, other.p2.X, other.p2.Y)
+                    //    ? other.p2
+                    //    : other.p1;
+                    int dx = v.X - prev.X;
+                    int dy = v.Y - prev.Y;
+                    adjustedPoint.X = (int)(prev.X - dx);
+                    adjustedPoint.Y = (int)(prev.Y - dy);
+                }
+                if (e.constraint == EdgeConstraint.None)
+                {
                     return;
+                }
                 e = v.OtherEdge(e);
                 prev = v;
                 v = e.OtherVertex(v);
@@ -63,6 +89,11 @@ namespace PolygonEditor
             double squaredRadius =
                 Math.Pow(X - mousePosition.X, 2) + Math.Pow(Y - mousePosition.Y, 2);
             return squaredRadius < 30;
+        }
+
+        public static double Distance(int posX, int posY, int x1, int y1)
+        {
+            return Math.Sqrt(Math.Pow(posX - x1, 2) + Math.Pow(posY - y1, 2));
         }
     }
 }

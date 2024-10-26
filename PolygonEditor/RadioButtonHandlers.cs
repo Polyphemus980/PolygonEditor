@@ -73,25 +73,31 @@ namespace PolygonEditor
 
         private void verticalRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (verticalRadioButton.Checked)
+            if (verticalRadioButton.Checked && selectedEdge.constraint != EdgeConstraint.Vertical)
                 SetConstraint(EdgeConstraint.Vertical);
         }
 
         private void horizontalRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (horizontalRadioButton.Checked)
+            if (
+                horizontalRadioButton.Checked
+                && selectedEdge.constraint != EdgeConstraint.Horizontal
+            )
                 SetConstraint(EdgeConstraint.Horizontal);
         }
 
         private void constantRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (constantRadioButton.Checked)
+            if (
+                constantRadioButton.Checked
+                && selectedEdge.constraint != EdgeConstraint.ConstantLength
+            )
                 SetConstraint(EdgeConstraint.ConstantLength);
         }
 
         private void bezierRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (bezierRadioButton.Checked)
+            if (bezierRadioButton.Checked && selectedEdge.constraint != EdgeConstraint.Bezier)
                 SetConstraint(EdgeConstraint.Bezier);
         }
 

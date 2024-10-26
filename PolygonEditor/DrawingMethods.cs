@@ -153,7 +153,10 @@ namespace PolygonEditor
         private void ConnectBezier(Edge e, Graphics g)
         {
             Pen pen = new Pen(Color.Azure);
-            pen.DashStyle = DashStyle.Dash;
+            pen.DashStyle = DashStyle.Custom;
+            pen.DashPattern = new float[] { 5, 10 };
+            g.DrawLine(pen, new Point(e.start.X, e.start.Y), new Point(e.end.X, e.end.Y));
+            g.DrawLine(pen, new Point(e.p2.X, e.p2.Y), new Point(e.p1.X, e.p1.Y));
             g.DrawLine(pen, new Point(e.start.X, e.start.Y), new Point(e.p1.X, e.p1.Y));
             g.DrawLine(pen, new Point(e.end.X, e.end.Y), new Point(e.p2.X, e.p2.Y));
         }
