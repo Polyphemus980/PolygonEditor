@@ -106,6 +106,35 @@ namespace PolygonEditor
                         }
                     }
                 }
+                else if (prev.constraint == VertexConstraint.C1)
+                {
+                    Edge previousEdge = prev.OtherEdge(e);
+                    if (previousEdge.constraint == EdgeConstraint.Bezier)
+                    {
+                        BezierControlPoint? adjustedPoint = previousEdge.AdjacentControlPoint(prev);
+                        if (adjustedPoint != null)
+                        {
+                            int dx = v.X - prev.X;
+                            int dy = v.Y - prev.Y;
+                            adjustedPoint.X = (int)(prev.X - 0.33 * dx);
+                            adjustedPoint.Y = (int)(prev.Y - 0.33 * dy);
+                        }
+                        if (
+                            e.constraint == EdgeConstraint.Bezier
+                            && previousEdge.constraint == EdgeConstraint.Bezier
+                        )
+                        {
+                            BezierControlPoint? adjustedPoint2 = e.AdjacentControlPoint(prev);
+                            if (adjustedPoint2 != null)
+                            {
+                                int dx = adjustedPoint.X - prev.X;
+                                int dy = adjustedPoint.Y - prev.Y;
+                                adjustedPoint2.X = (int)(prev.X - dx);
+                                adjustedPoint2.Y = (int)(prev.Y - dy);
+                            }
+                        }
+                    }
+                }
                 e = v.OtherEdge(e);
                 prev = v;
                 v = e.OtherVertex(v);
@@ -135,6 +164,35 @@ namespace PolygonEditor
                             int dy = adjustedPoint.Y - prev.Y;
                             adjustedPoint2.X = (int)(prev.X - 0.5 * dx);
                             adjustedPoint2.Y = (int)(prev.Y - 0.5 * dy);
+                        }
+                    }
+                }
+            }
+            if (prev.constraint == VertexConstraint.C1)
+            {
+                Edge previousEdge = prev.OtherEdge(e);
+                if (previousEdge.constraint == EdgeConstraint.Bezier)
+                {
+                    BezierControlPoint? adjustedPoint = previousEdge.AdjacentControlPoint(prev);
+                    if (adjustedPoint != null)
+                    {
+                        int dx = v.X - prev.X;
+                        int dy = v.Y - prev.Y;
+                        adjustedPoint.X = (int)(prev.X - 0.33 * dx);
+                        adjustedPoint.Y = (int)(prev.Y - 0.33 * dy);
+                    }
+                    if (
+                        e.constraint == EdgeConstraint.Bezier
+                        && previousEdge.constraint == EdgeConstraint.Bezier
+                    )
+                    {
+                        BezierControlPoint? adjustedPoint2 = e.AdjacentControlPoint(prev);
+                        if (adjustedPoint2 != null)
+                        {
+                            int dx = adjustedPoint.X - prev.X;
+                            int dy = adjustedPoint.Y - prev.Y;
+                            adjustedPoint2.X = (int)(prev.X - dx);
+                            adjustedPoint2.Y = (int)(prev.Y - dy);
                         }
                     }
                 }
