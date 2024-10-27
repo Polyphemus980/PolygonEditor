@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PolygonEditor
 {
-    partial class Form1 : Form
+    public partial class Form1 : Form
     {
         public Action<Point, Point, Graphics, Color> drawingMethod { get; set; }
         public Action<

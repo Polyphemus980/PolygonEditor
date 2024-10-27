@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace PolygonEditor
 {
-    partial class Form1 : Form
+    public partial class Form1 : Form
     {
-        public int draggedIndex { get; set; } = -1;
+        public int draggedVertexIndex { get; set; } = -1;
         public bool isDragging { get; set; } = false;
 
         private Point rightClickPosition;
 
         public BezierControlPoint draggedBezier { get; set; } = null;
+
+        public int draggedBezierEdgeIndex { get; set; } = -1;
         public bool isDraggingBezier { get; set; } = false;
 
         private void EditingPanel_MouseDown(object sender, MouseEventArgs e)
@@ -26,7 +28,7 @@ namespace PolygonEditor
             {
                 if (vertices[i].isNear(e.Location))
                 {
-                    draggedIndex = i;
+                    draggedVertexIndex = i;
                     isDragging = true;
                     return;
                 }
@@ -38,12 +40,14 @@ namespace PolygonEditor
                 if (IsNear(edges[i].p1.X, edges[i].p1.Y, e.X, e.Y))
                 {
                     draggedBezier = edges[i].p1;
+                    draggedBezierEdgeIndex = i;
                     isDraggingBezier = true;
                     return;
                 }
                 else if (IsNear(edges[i].p2.X, edges[i].p2.Y, e.X, e.Y))
                 {
                     draggedBezier = edges[i].p2;
+                    draggedBezierEdgeIndex = i;
                     isDraggingBezier = true;
                     return;
                 }
@@ -54,7 +58,7 @@ namespace PolygonEditor
         {
             if (isDragging)
             {
-                Vertex currentVertex = vertices[draggedIndex];
+                Vertex currentVertex = vertices[draggedVertexIndex];
                 if (Control.ModifierKeys == Keys.Control)
                 {
                     int dx = currentVertex.X - e.X;
@@ -73,13 +77,12 @@ namespace PolygonEditor
             }
             else if (isDraggingBezier)
             {
-                draggedBezier.X = e.X;
-                draggedBezier.Y = e.Y;
+                edges[draggedBezierEdgeIndex].MoveBezierIteratively(draggedBezier, e.X, e.Y);
                 EditingPanel.Invalidate();
             }
         }
 
-        public void MoveVertexAPI(Vertex vertex, int X, int Y)
+        public static void MoveVertexAPI(Vertex vertex, int X, int Y)
         {
             vertex.MoveVertexIteratively(X, Y, true);
             vertex.MoveVertexIteratively(X, Y, false);
@@ -90,7 +93,7 @@ namespace PolygonEditor
         private void EditingPanel_MouseUp(object sender, MouseEventArgs e)
         {
             isDragging = false;
-            draggedIndex = -1;
+            draggedVertexIndex = -1;
             isDraggingBezier = false;
             draggedBezier = null;
         }
