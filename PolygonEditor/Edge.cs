@@ -43,6 +43,18 @@ namespace PolygonEditor
             return v == start ? end : start;
         }
 
+        public BezierControlPoint? AdjacentControlPoint(Vertex v)
+        {
+            if (v != end && v != start)
+                return null;
+            return v == end ? p2 : p1;
+        }
+
+        public BezierControlPoint otherControlPoint(BezierControlPoint cp)
+        {
+            return cp == p1 ? p2 : p1;
+        }
+
         public bool IsPointNearEdge(Point P, int threshold = 5)
         {
             int x1 = start.X;

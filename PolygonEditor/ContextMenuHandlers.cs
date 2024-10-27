@@ -73,5 +73,44 @@ namespace PolygonEditor
                 edges.Add(new Edge(neighborSecond, neighborFirst));
             EditingPanel.Invalidate();
         }
+
+        private void g0ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                if (vertices[i].isNear(rightClickPosition))
+                {
+                    vertices[i].constraint = VertexConstraint.G0;
+                    EditingPanel.Invalidate();
+                    return;
+                }
+            }
+        }
+
+        private void g1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                if (vertices[i].isNear(rightClickPosition))
+                {
+                    vertices[i].constraint = VertexConstraint.G1;
+                    EditingPanel.Invalidate();
+                    return;
+                }
+            }
+        }
+
+        private void c1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                if (vertices[i].isNear(rightClickPosition))
+                {
+                    vertices[i].constraint = VertexConstraint.C1;
+                    EditingPanel.Invalidate();
+                    return;
+                }
+            }
+        }
     }
 }

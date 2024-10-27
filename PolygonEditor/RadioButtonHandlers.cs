@@ -64,6 +64,10 @@ namespace PolygonEditor
                     int pos2Y =
                         (selectedEdge.start.Y + selectedEdge.end.Y) / 2
                         + Math.Min(20, selectedEdge.length / 3);
+                    if (selectedEdge.start.constraint == VertexConstraint.None)
+                        selectedEdge.start.constraint = VertexConstraint.G0;
+                    if (selectedEdge.end.constraint == VertexConstraint.None)
+                        selectedEdge.end.constraint = VertexConstraint.G0;
                     selectedEdge.p1 = new BezierControlPoint(pos1X, pos1Y);
                     selectedEdge.p2 = new BezierControlPoint(pos2X, pos2Y);
                     break;

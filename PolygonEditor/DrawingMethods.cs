@@ -134,7 +134,7 @@ namespace PolygonEditor
             g.FillRectangle(brush, new Rectangle(x0, y0, 1, 1));
         }
 
-        private void WriteConstraints(Edge e, PaintEventArgs p)
+        private void displayConstraintsEdge(Edge e, PaintEventArgs p)
         {
             int midpointX = (e.start.X + e.end.X) / 2;
             int midpointY = (e.start.Y + e.end.Y) / 2;
@@ -148,6 +148,26 @@ namespace PolygonEditor
             else if (e.constraint == EdgeConstraint.ConstantLength)
                 lengthText += "C";
             p.Graphics.DrawString(lengthText, font, brush, new Point(midpointX, midpointY));
+        }
+
+        private void displayConstraintsVertex(Vertex v, PaintEventArgs p)
+        {
+            Font font = new Font("Arial", 8);
+            Brush brush = Brushes.White;
+            string text = "";
+            if (v.constraint == VertexConstraint.G0)
+            {
+                text = "G0";
+            }
+            else if (v.constraint == VertexConstraint.G1)
+            {
+                text = "G1";
+            }
+            else if (v.constraint == VertexConstraint.C1)
+            {
+                text = "C1";
+            }
+            p.Graphics.DrawString(text, font, brush, new Point(v.X + 5, v.Y + 5));
         }
 
         private void ConnectBezier(Edge e, Graphics g)
@@ -190,7 +210,8 @@ namespace PolygonEditor
                         drawingColor
                     );
                 }
-                WriteConstraints(edge, e);
+                if (edge.constraint != EdgeConstraint.Bezier)
+                    displayConstraintsEdge(edge, e);
                 if (edge.p1 != null && edge.p2 != null)
                 {
                     int radius = 5;
@@ -201,6 +222,12 @@ namespace PolygonEditor
                         2 * radius,
                         2 * radius
                     );
+                    e.Graphics.DrawString(
+                        "p1",
+                        new Font("Arial", 8),
+                        Brushes.Azure,
+                        new Point(edge.p1.X, edge.p1.Y)
+                    );
                     e.Graphics.FillEllipse(
                         Brushes.Pink,
                         edge.p2.X - radius,
@@ -208,7 +235,13 @@ namespace PolygonEditor
                         2 * radius,
                         2 * radius
                     );
-                    ConnectBezier(edge, e.Graphics);
+                    e.Graphics.DrawString(
+                        "p2",
+                        new Font("Arial", 8),
+                        Brushes.Azure,
+                        new Point(edge.p2.X, edge.p2.Y)
+                    );
+                    //ConnectBezier(edge, e.Graphics);
                 }
             }
             foreach (var vertex in vertices)
@@ -221,6 +254,7 @@ namespace PolygonEditor
                     2 * radius,
                     2 * radius
                 );
+                displayConstraintsVertex(vertex, e);
             }
         }
     }

@@ -54,7 +54,6 @@ namespace PolygonEditor
             vertices.Add(new Vertex(200, 200));
             vertices.Add(new Vertex(300, 300));
             vertices.Add(new Vertex(400, 200));
-            vertices[2].constraint = VertexConstraint.G1;
             edges.Add(new Edge(vertices[0], vertices[1]));
             edges.Add(new Edge(vertices[1], vertices[2]));
             edges.Add(new Edge(vertices[2], vertices[0]));

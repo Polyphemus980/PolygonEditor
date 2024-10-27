@@ -83,6 +83,8 @@ namespace PolygonEditor
         {
             vertex.MoveVertexIteratively(X, Y, true);
             vertex.MoveVertexIteratively(X, Y, false);
+            vertex.MoveBeziersIteratively(true);
+            vertex.MoveBeziersIteratively(false);
         }
 
         private void EditingPanel_MouseUp(object sender, MouseEventArgs e)

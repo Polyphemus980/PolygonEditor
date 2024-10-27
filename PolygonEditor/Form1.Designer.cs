@@ -32,6 +32,10 @@
             contextMenu = new ContextMenuStrip(components);
             addVertexToolStripMenuItem = new ToolStripMenuItem();
             removeVertexToolStripMenuItem = new ToolStripMenuItem();
+            addVertexConstraintToolStripMenuItem = new ToolStripMenuItem();
+            g0ToolStripMenuItem = new ToolStripMenuItem();
+            g1ToolStripMenuItem = new ToolStripMenuItem();
+            c1ToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1 = new MenuStrip();
             polygonToolStripMenuItem = new ToolStripMenuItem();
             newPolygon = new ToolStripMenuItem();
@@ -62,9 +66,9 @@
             // contextMenu
             // 
             contextMenu.ImageScalingSize = new Size(20, 20);
-            contextMenu.Items.AddRange(new ToolStripItem[] { addVertexToolStripMenuItem, removeVertexToolStripMenuItem });
+            contextMenu.Items.AddRange(new ToolStripItem[] { addVertexToolStripMenuItem, removeVertexToolStripMenuItem, addVertexConstraintToolStripMenuItem });
             contextMenu.Name = "contextMenu";
-            contextMenu.Size = new Size(229, 80);
+            contextMenu.Size = new Size(229, 104);
             // 
             // addVertexToolStripMenuItem
             // 
@@ -79,6 +83,34 @@
             removeVertexToolStripMenuItem.Size = new Size(228, 24);
             removeVertexToolStripMenuItem.Text = "Remove vertex";
             removeVertexToolStripMenuItem.Click += removeVertex_Click;
+            // 
+            // addVertexConstraintToolStripMenuItem
+            // 
+            addVertexConstraintToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { g0ToolStripMenuItem, g1ToolStripMenuItem, c1ToolStripMenuItem });
+            addVertexConstraintToolStripMenuItem.Name = "addVertexConstraintToolStripMenuItem";
+            addVertexConstraintToolStripMenuItem.Size = new Size(228, 24);
+            addVertexConstraintToolStripMenuItem.Text = "Add vertex constraint";
+            // 
+            // g0ToolStripMenuItem
+            // 
+            g0ToolStripMenuItem.Name = "g0ToolStripMenuItem";
+            g0ToolStripMenuItem.Size = new Size(224, 26);
+            g0ToolStripMenuItem.Text = "G0";
+            g0ToolStripMenuItem.Click += g0ToolStripMenuItem_Click;
+            // 
+            // g1ToolStripMenuItem
+            // 
+            g1ToolStripMenuItem.Name = "g1ToolStripMenuItem";
+            g1ToolStripMenuItem.Size = new Size(224, 26);
+            g1ToolStripMenuItem.Text = "G1";
+            g1ToolStripMenuItem.Click += g1ToolStripMenuItem_Click;
+            // 
+            // c1ToolStripMenuItem
+            // 
+            c1ToolStripMenuItem.Name = "c1ToolStripMenuItem";
+            c1ToolStripMenuItem.Size = new Size(224, 26);
+            c1ToolStripMenuItem.Text = "C1";
+            c1ToolStripMenuItem.Click += c1ToolStripMenuItem_Click;
             // 
             // menuStrip1
             // 
@@ -100,14 +132,14 @@
             // newPolygon
             // 
             newPolygon.Name = "newPolygon";
-            newPolygon.Size = new Size(146, 26);
+            newPolygon.Size = new Size(224, 26);
             newPolygon.Text = "New";
             newPolygon.Click += newPolygon_Click;
             // 
             // removePolygon
             // 
             removePolygon.Name = "removePolygon";
-            removePolygon.Size = new Size(146, 26);
+            removePolygon.Size = new Size(224, 26);
             removePolygon.Text = "Remove";
             // 
             // tableLayoutPanel1
@@ -340,5 +372,9 @@
         private TableLayoutPanel tableLayoutPanel2;
         private TextBox textBox1;
         private RadioButton bezierRadioButton;
+        private ToolStripMenuItem addVertexConstraintToolStripMenuItem;
+        private ToolStripMenuItem g0ToolStripMenuItem;
+        private ToolStripMenuItem g1ToolStripMenuItem;
+        private ToolStripMenuItem c1ToolStripMenuItem;
     }
 }
