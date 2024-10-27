@@ -144,8 +144,8 @@ namespace PolygonEditor
                             {
                                 double dx = adjustedPoint.X - prev.X;
                                 double dy = adjustedPoint.Y - prev.Y;
-                                adjustedPoint2.X = prev.X - dx;
-                                adjustedPoint2.Y = prev.Y - dy;
+                                adjustedPoint2.X = (int)(prev.X - dx);
+                                adjustedPoint2.Y = (int)(prev.Y - dy);
                             }
                         }
                     }
@@ -245,6 +245,12 @@ namespace PolygonEditor
         public static double Distance(int posX, int posY, int x1, int y1)
         {
             return Math.Sqrt(Math.Pow(posX - x1, 2) + Math.Pow(posY - y1, 2));
+        }
+
+        bool arePointsCollinear(double x1, double y1, double x2, double y2, double x3, double y3)
+        {
+            double area = x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2);
+            return area == 0;
         }
     }
 }

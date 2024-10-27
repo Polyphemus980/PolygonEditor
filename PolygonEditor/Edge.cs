@@ -97,15 +97,29 @@ namespace PolygonEditor
                     BezierControlPoint b = otherEdge.AdjacentControlPoint(closerVertex);
                     double dx = cp.X - closerVertex.X;
                     double dy = cp.Y - closerVertex.Y;
-                    b.X = (int)(closerVertex.X - 0.5 * dx);
-                    b.Y = (int)(closerVertex.Y - 0.5 * dy);
+                    Vector2 normalizedVector = Vector2.Normalize(new Vector2((float)dx, (float)dy));
+                    double distance = Vector2.Distance(
+                        new Vector2((float)closerVertex.X, (float)closerVertex.Y),
+                        new Vector2((float)b.X, (float)b.Y)
+                    );
+                    b.X = closerVertex.X - normalizedVector.X * distance;
+                    b.Y = closerVertex.Y - normalizedVector.Y * distance;
                 }
                 else
                 {
                     Vertex v = otherEdge.OtherVertex(closerVertex);
                     double dx = v.X - cp.X;
                     double dy = v.Y - cp.Y;
-                    Form1.MoveVertexAPI(closerVertex, (cp.X + 0.5 * dx), (cp.Y + 0.5 * dy));
+                    Vector2 normalizedVector = Vector2.Normalize(new Vector2((float)dx, (float)dy));
+                    double distance = Vector2.Distance(
+                        new Vector2((float)closerVertex.X, (float)closerVertex.Y),
+                        new Vector2((float)v.X, (float)v.Y)
+                    );
+                    Form1.MoveVertexAPI(
+                        closerVertex,
+                        v.X - normalizedVector.X * distance,
+                        v.Y - normalizedVector.Y * distance
+                    );
                 }
             }
             else if (closerVertex.constraint == VertexConstraint.C1)
@@ -116,19 +130,15 @@ namespace PolygonEditor
                     BezierControlPoint b = otherEdge.AdjacentControlPoint(closerVertex);
                     double dx = cp.X - closerVertex.X;
                     double dy = cp.Y - closerVertex.Y;
-                    b.X = (int)(closerVertex.X - dx);
-                    b.Y = (int)(closerVertex.Y - dy);
+                    b.X = closerVertex.X - dx;
+                    b.Y = (closerVertex.Y - dy);
                 }
                 else
                 {
                     Vertex v = otherEdge.OtherVertex(closerVertex);
                     double dx = v.X - cp.X;
                     double dy = v.Y - cp.Y;
-                    Form1.MoveVertexAPI(
-                        closerVertex,
-                        (int)(cp.X + 0.33 * dx),
-                        (int)(cp.Y + 0.33 * dy)
-                    );
+                    Form1.MoveVertexAPI(closerVertex, cp.X + 0.33 * dx, cp.Y + 0.33 * dy);
                 }
             }
         }
