@@ -61,8 +61,8 @@ namespace PolygonEditor
                 Vertex currentVertex = vertices[draggedVertexIndex];
                 if (Control.ModifierKeys == Keys.Control)
                 {
-                    int dx = currentVertex.X - e.X;
-                    int dy = currentVertex.Y - e.Y;
+                    double dx = currentVertex.X - e.X;
+                    double dy = currentVertex.Y - e.Y;
                     for (int i = 0; i < vertices.Count; i++)
                     {
                         vertices[i].X -= dx;
@@ -82,7 +82,7 @@ namespace PolygonEditor
             }
         }
 
-        public static void MoveVertexAPI(Vertex vertex, int X, int Y)
+        public static void MoveVertexAPI(Vertex vertex, double X, double Y)
         {
             vertex.MoveVertexIteratively(X, Y, true);
             vertex.MoveVertexIteratively(X, Y, false);

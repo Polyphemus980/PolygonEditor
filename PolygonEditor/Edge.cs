@@ -58,18 +58,18 @@ namespace PolygonEditor
 
         public bool IsPointNearEdge(Point P, int threshold = 5)
         {
-            int x1 = start.X;
-            int y1 = start.Y;
-            int x2 = end.X;
-            int y2 = end.Y;
+            double x1 = start.X;
+            double y1 = start.Y;
+            double x2 = end.X;
+            double y2 = end.Y;
 
-            int px = P.X;
-            int py = P.Y;
+            double px = P.X;
+            double py = P.Y;
 
-            int dx = x2 - x1;
-            int dy = y2 - y1;
-            int apx = px - x1;
-            int apy = py - y1;
+            double dx = x2 - x1;
+            double dy = y2 - y1;
+            double apx = px - x1;
+            double apy = py - y1;
 
             double bottom = dx * dx + dy * dy;
             double t = (apx * dx + apy * dy) / bottom;
@@ -95,21 +95,17 @@ namespace PolygonEditor
                 if (otherEdge.constraint == EdgeConstraint.Bezier)
                 {
                     BezierControlPoint b = otherEdge.AdjacentControlPoint(closerVertex);
-                    int dx = cp.X - closerVertex.X;
-                    int dy = cp.Y - closerVertex.Y;
+                    double dx = cp.X - closerVertex.X;
+                    double dy = cp.Y - closerVertex.Y;
                     b.X = (int)(closerVertex.X - 0.5 * dx);
                     b.Y = (int)(closerVertex.Y - 0.5 * dy);
                 }
                 else
                 {
                     Vertex v = otherEdge.OtherVertex(closerVertex);
-                    int dx = v.X - cp.X;
-                    int dy = v.Y - cp.Y;
-                    Form1.MoveVertexAPI(
-                        closerVertex,
-                        (int)(cp.X + 0.5 * dx),
-                        (int)(cp.Y + 0.5 * dy)
-                    );
+                    double dx = v.X - cp.X;
+                    double dy = v.Y - cp.Y;
+                    Form1.MoveVertexAPI(closerVertex, (cp.X + 0.5 * dx), (cp.Y + 0.5 * dy));
                 }
             }
             else if (closerVertex.constraint == VertexConstraint.C1)
@@ -118,16 +114,16 @@ namespace PolygonEditor
                 if (otherEdge.constraint == EdgeConstraint.Bezier)
                 {
                     BezierControlPoint b = otherEdge.AdjacentControlPoint(closerVertex);
-                    int dx = cp.X - closerVertex.X;
-                    int dy = cp.Y - closerVertex.Y;
+                    double dx = cp.X - closerVertex.X;
+                    double dy = cp.Y - closerVertex.Y;
                     b.X = (int)(closerVertex.X - dx);
                     b.Y = (int)(closerVertex.Y - dy);
                 }
                 else
                 {
                     Vertex v = otherEdge.OtherVertex(closerVertex);
-                    int dx = v.X - cp.X;
-                    int dy = v.Y - cp.Y;
+                    double dx = v.X - cp.X;
+                    double dy = v.Y - cp.Y;
                     Form1.MoveVertexAPI(
                         closerVertex,
                         (int)(cp.X + 0.33 * dx),

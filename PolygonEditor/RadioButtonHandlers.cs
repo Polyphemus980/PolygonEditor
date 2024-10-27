@@ -35,6 +35,13 @@ namespace PolygonEditor
                 && (neighbor1.constraint == constraint || neighbor2.constraint == constraint)
             )
                 return false;
+            if (constraint != EdgeConstraint.Bezier)
+            {
+                if (selectedEdge.start.OtherEdge(selectedEdge).constraint != EdgeConstraint.Bezier)
+                    selectedEdge.start.constraint = VertexConstraint.None;
+                if (selectedEdge.end.OtherEdge(selectedEdge).constraint != EdgeConstraint.Bezier)
+                    selectedEdge.end.constraint = VertexConstraint.None;
+            }
             selectedEdge.constraint = constraint;
             textBox1.Clear();
             if (selectedEdge.constraint != EdgeConstraint.Bezier)
@@ -59,16 +66,16 @@ namespace PolygonEditor
                     break;
 
                 case EdgeConstraint.Bezier:
-                    int pos1X =
+                    double pos1X =
                         (selectedEdge.start.X + selectedEdge.end.X) / 2
                         - Math.Min(20, selectedEdge.length / 3);
-                    int pos1Y =
+                    double pos1Y =
                         (selectedEdge.start.Y + selectedEdge.end.Y) / 2
                         - Math.Min(20, selectedEdge.length / 3);
-                    int pos2X =
+                    double pos2X =
                         (selectedEdge.start.X + selectedEdge.end.X) / 2
                         + Math.Min(selectedEdge.length / 3, 20);
-                    int pos2Y =
+                    double pos2Y =
                         (selectedEdge.start.Y + selectedEdge.end.Y) / 2
                         + Math.Min(20, selectedEdge.length / 3);
                     if (selectedEdge.start.constraint == VertexConstraint.None)

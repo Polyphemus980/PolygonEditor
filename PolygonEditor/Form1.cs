@@ -126,7 +126,7 @@ namespace PolygonEditor
             EditingPanel.Invalidate();
         }
 
-        public bool IsNear(int p1x, int p1y, int p2x, int p2y)
+        public bool IsNear(double p1x, double p1y, double p2x, double p2y)
         {
             double squaredRadius = Math.Pow(p1y - p2y, 2) + Math.Pow(p1y - p2y, 2);
             return squaredRadius < 30;

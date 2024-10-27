@@ -19,12 +19,12 @@ namespace PolygonEditor
     {
         public static int index = 0;
         public int self_index;
-        public int X;
-        public int Y;
+        public double X;
+        public double Y;
         public List<Edge> edges = new List<Edge>();
         public VertexConstraint constraint;
 
-        public Vertex(int x, int y)
+        public Vertex(double x, double y)
         {
             constraint = VertexConstraint.None;
             X = x;
@@ -36,7 +36,7 @@ namespace PolygonEditor
             return edges[0] == edge ? edges[1] : edges[0];
         }
 
-        public void MoveVertexIteratively(int newX, int newY, bool direction)
+        public void MoveVertexIteratively(double newX, double newY, bool direction)
         {
             X = newX;
             Y = newY;
@@ -56,8 +56,8 @@ namespace PolygonEditor
                 else if (e.constraint == EdgeConstraint.ConstantLength)
                 {
                     double angle = Math.Atan2(v.Y - prev.Y, v.X - prev.X);
-                    int vX = (int)(prev.X + e.fixedLength * Math.Cos(angle));
-                    int vY = (int)(prev.Y + e.fixedLength * Math.Sin(angle));
+                    double vX = prev.X + e.fixedLength * Math.Cos(angle);
+                    double vY = prev.Y + e.fixedLength * Math.Sin(angle);
                     v.X = vX;
                     v.Y = vY;
                 }
@@ -86,18 +86,17 @@ namespace PolygonEditor
                         BezierControlPoint? adjustedPoint = previousEdge.AdjacentControlPoint(prev);
                         if (adjustedPoint != null)
                         {
-                            int dx = v.X - prev.X;
-                            int dy = v.Y - prev.Y;
-                            Vector2 normalizedVector = Vector2.Normalize(new Vector2(dx, dy));
-                            int distance = (int)
-                                Math.Round(
-                                    Vector2.Distance(
-                                        new Vector2(prev.X, prev.Y),
-                                        new Vector2(adjustedPoint.X, adjustedPoint.Y)
-                                    )
-                                );
-                            adjustedPoint.X = (int)(prev.X - distance * normalizedVector.X); //0.5 * dx);
-                            adjustedPoint.Y = (int)(prev.Y - distance * normalizedVector.Y); //0.5 * dy);
+                            double dx = v.X - prev.X;
+                            double dy = v.Y - prev.Y;
+                            Vector2 normalizedVector = Vector2.Normalize(
+                                new Vector2((float)dx, (float)dy)
+                            );
+                            double distance = Vector2.Distance(
+                                new Vector2((float)prev.X, (float)prev.Y),
+                                new Vector2((float)adjustedPoint.X, (float)adjustedPoint.Y)
+                            );
+                            adjustedPoint.X = prev.X - distance * normalizedVector.X;
+                            adjustedPoint.Y = prev.Y - distance * normalizedVector.Y;
                         }
                         if (
                             e.constraint == EdgeConstraint.Bezier
@@ -107,10 +106,17 @@ namespace PolygonEditor
                             BezierControlPoint? adjustedPoint2 = e.AdjacentControlPoint(prev);
                             if (adjustedPoint2 != null)
                             {
-                                int dx = adjustedPoint.X - prev.X;
-                                int dy = adjustedPoint.Y - prev.Y;
-                                adjustedPoint2.X = (int)(prev.X - 0.5 * dx);
-                                adjustedPoint2.Y = (int)(prev.Y - 0.5 * dy);
+                                double dx = adjustedPoint.X - prev.X;
+                                double dy = adjustedPoint.Y - prev.Y;
+                                Vector2 normalizedVector = Vector2.Normalize(
+                                    new Vector2((float)dx, (float)dy)
+                                );
+                                double distance = Vector2.Distance(
+                                    new Vector2((float)prev.X, (float)prev.Y),
+                                    new Vector2((float)adjustedPoint2.X, (float)adjustedPoint2.Y)
+                                );
+                                adjustedPoint2.X = prev.X - distance * normalizedVector.X;
+                                adjustedPoint2.Y = prev.Y - distance * normalizedVector.Y;
                             }
                         }
                     }
@@ -123,8 +129,8 @@ namespace PolygonEditor
                         BezierControlPoint? adjustedPoint = previousEdge.AdjacentControlPoint(prev);
                         if (adjustedPoint != null)
                         {
-                            int dx = v.X - prev.X;
-                            int dy = v.Y - prev.Y;
+                            double dx = v.X - prev.X;
+                            double dy = v.Y - prev.Y;
                             adjustedPoint.X = (int)(prev.X - 0.33 * dx);
                             adjustedPoint.Y = (int)(prev.Y - 0.33 * dy);
                         }
@@ -136,10 +142,10 @@ namespace PolygonEditor
                             BezierControlPoint? adjustedPoint2 = e.AdjacentControlPoint(prev);
                             if (adjustedPoint2 != null)
                             {
-                                int dx = adjustedPoint.X - prev.X;
-                                int dy = adjustedPoint.Y - prev.Y;
-                                adjustedPoint2.X = (int)(prev.X - dx);
-                                adjustedPoint2.Y = (int)(prev.Y - dy);
+                                double dx = adjustedPoint.X - prev.X;
+                                double dy = adjustedPoint.Y - prev.Y;
+                                adjustedPoint2.X = prev.X - dx;
+                                adjustedPoint2.Y = prev.Y - dy;
                             }
                         }
                     }
@@ -156,10 +162,17 @@ namespace PolygonEditor
                     BezierControlPoint? adjustedPoint = previousEdge.AdjacentControlPoint(prev);
                     if (adjustedPoint != null)
                     {
-                        int dx = v.X - prev.X;
-                        int dy = v.Y - prev.Y;
-                        adjustedPoint.X = (int)(prev.X - 0.5 * dx);
-                        adjustedPoint.Y = (int)(prev.Y - 0.5 * dy);
+                        double dx = v.X - prev.X;
+                        double dy = v.Y - prev.Y;
+                        Vector2 normalizedVector = Vector2.Normalize(
+                            new Vector2((float)dx, (float)dy)
+                        );
+                        double distance = Vector2.Distance(
+                            new Vector2((float)prev.X, (float)prev.Y),
+                            new Vector2((float)adjustedPoint.X, (float)adjustedPoint.Y)
+                        );
+                        adjustedPoint.X = prev.X - distance * normalizedVector.X;
+                        adjustedPoint.Y = prev.Y - distance * normalizedVector.Y;
                     }
                     if (
                         e.constraint == EdgeConstraint.Bezier
@@ -169,10 +182,17 @@ namespace PolygonEditor
                         BezierControlPoint? adjustedPoint2 = e.AdjacentControlPoint(prev);
                         if (adjustedPoint2 != null)
                         {
-                            int dx = adjustedPoint.X - prev.X;
-                            int dy = adjustedPoint.Y - prev.Y;
-                            adjustedPoint2.X = (int)(prev.X - 0.5 * dx);
-                            adjustedPoint2.Y = (int)(prev.Y - 0.5 * dy);
+                            double dx = adjustedPoint.X - prev.X;
+                            double dy = adjustedPoint.Y - prev.Y;
+                            Vector2 normalizedVector = Vector2.Normalize(
+                                new Vector2((float)dx, (float)dy)
+                            );
+                            double distance = Vector2.Distance(
+                                new Vector2((float)prev.X, (float)prev.Y),
+                                new Vector2((float)adjustedPoint2.X, (float)adjustedPoint2.Y)
+                            );
+                            adjustedPoint2.X = prev.X - distance * normalizedVector.X;
+                            adjustedPoint2.Y = prev.Y - distance * normalizedVector.Y;
                         }
                     }
                 }
@@ -185,8 +205,8 @@ namespace PolygonEditor
                     BezierControlPoint? adjustedPoint = previousEdge.AdjacentControlPoint(prev);
                     if (adjustedPoint != null)
                     {
-                        int dx = v.X - prev.X;
-                        int dy = v.Y - prev.Y;
+                        double dx = v.X - prev.X;
+                        double dy = v.Y - prev.Y;
                         adjustedPoint.X = (int)(prev.X - 0.33 * dx);
                         adjustedPoint.Y = (int)(prev.Y - 0.33 * dy);
                     }
@@ -198,8 +218,8 @@ namespace PolygonEditor
                         BezierControlPoint? adjustedPoint2 = e.AdjacentControlPoint(prev);
                         if (adjustedPoint2 != null)
                         {
-                            int dx = adjustedPoint.X - prev.X;
-                            int dy = adjustedPoint.Y - prev.Y;
+                            double dx = adjustedPoint.X - prev.X;
+                            double dy = adjustedPoint.Y - prev.Y;
                             adjustedPoint2.X = (int)(prev.X - dx);
                             adjustedPoint2.Y = (int)(prev.Y - dy);
                         }
@@ -210,8 +230,8 @@ namespace PolygonEditor
 
         bool areColinear(BezierControlPoint b1, BezierControlPoint b2)
         {
-            int pX = X;
-            int pY = Y;
+            double pX = X;
+            double pY = Y;
             return (pY - b1.Y) * (b2.X - b1.X) == (pX - b1.X) * (b2.Y - b1.Y);
         }
 

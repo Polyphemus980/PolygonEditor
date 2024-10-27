@@ -136,8 +136,8 @@ namespace PolygonEditor
 
         private void displayConstraintsEdge(Edge e, PaintEventArgs p)
         {
-            int midpointX = (e.start.X + e.end.X) / 2;
-            int midpointY = (e.start.Y + e.end.Y) / 2;
+            int midpointX = (int)(e.start.X + e.end.X) / 2;
+            int midpointY = (int)(e.start.Y + e.end.Y) / 2;
             Font font = new Font("Arial", 8);
             Brush brush = Brushes.White;
             string lengthText = e.length.ToString("0.00");
@@ -167,7 +167,7 @@ namespace PolygonEditor
             {
                 text = "C1";
             }
-            p.Graphics.DrawString(text, font, brush, new Point(v.X + 5, v.Y + 5));
+            p.Graphics.DrawString(text, font, brush, new Point((int)v.X + 5, (int)v.Y + 5));
         }
 
         private void ConnectBezier(Edge e, Graphics g)
@@ -175,10 +175,26 @@ namespace PolygonEditor
             Pen pen = new Pen(Color.Azure);
             pen.DashStyle = DashStyle.Custom;
             pen.DashPattern = new float[] { 5, 10 };
-            g.DrawLine(pen, new Point(e.start.X, e.start.Y), new Point(e.end.X, e.end.Y));
-            g.DrawLine(pen, new Point(e.p2.X, e.p2.Y), new Point(e.p1.X, e.p1.Y));
-            g.DrawLine(pen, new Point(e.start.X, e.start.Y), new Point(e.p1.X, e.p1.Y));
-            g.DrawLine(pen, new Point(e.end.X, e.end.Y), new Point(e.p2.X, e.p2.Y));
+            g.DrawLine(
+                pen,
+                new Point((int)e.start.X, (int)e.start.Y),
+                new Point((int)e.end.X, (int)e.end.Y)
+            );
+            g.DrawLine(
+                pen,
+                new Point((int)e.p2.X, (int)e.p2.Y),
+                new Point((int)e.p1.X, (int)e.p1.Y)
+            );
+            g.DrawLine(
+                pen,
+                new Point((int)e.start.X, (int)e.start.Y),
+                new Point((int)e.p1.X, (int)e.p1.Y)
+            );
+            g.DrawLine(
+                pen,
+                new Point((int)e.end.X, (int)e.end.Y),
+                new Point((int)e.p2.X, (int)e.p2.Y)
+            );
         }
 
         private void EditingPanel_Paint(object sender, PaintEventArgs e)
@@ -189,8 +205,8 @@ namespace PolygonEditor
                 if (edge.constraint != EdgeConstraint.Bezier)
                 {
                     drawingMethod(
-                        new Point(edge.start.X, edge.start.Y),
-                        new Point(edge.end.X, edge.end.Y),
+                        new Point((int)edge.start.X, (int)edge.start.Y),
+                        new Point((int)edge.end.X, (int)edge.end.Y),
                         e.Graphics,
                         drawingColor
                     );
@@ -198,14 +214,14 @@ namespace PolygonEditor
                 else
                 {
                     drawingBezierMethod(
-                        edge.start.X,
-                        edge.start.Y,
-                        edge.p1.X,
-                        edge.p1.Y,
-                        edge.p2.X,
-                        edge.p2.Y,
-                        edge.end.X,
-                        edge.end.Y,
+                        (int)edge.start.X,
+                        (int)edge.start.Y,
+                        (int)edge.p1.X,
+                        (int)edge.p1.Y,
+                        (int)edge.p2.X,
+                        (int)edge.p2.Y,
+                        (int)edge.end.X,
+                        (int)edge.end.Y,
                         e.Graphics,
                         drawingColor
                     );
@@ -217,8 +233,8 @@ namespace PolygonEditor
                     int radius = 5;
                     e.Graphics.FillEllipse(
                         Brushes.Pink,
-                        edge.p1.X - radius,
-                        edge.p1.Y - radius,
+                        (int)edge.p1.X - radius,
+                        (int)edge.p1.Y - radius,
                         2 * radius,
                         2 * radius
                     );
@@ -226,12 +242,12 @@ namespace PolygonEditor
                         "p1",
                         new Font("Arial", 8),
                         Brushes.Azure,
-                        new Point(edge.p1.X, edge.p1.Y)
+                        new Point((int)edge.p1.X, (int)edge.p1.Y)
                     );
                     e.Graphics.FillEllipse(
                         Brushes.Pink,
-                        edge.p2.X - radius,
-                        edge.p2.Y - radius,
+                        (int)edge.p2.X - radius,
+                        (int)edge.p2.Y - radius,
                         2 * radius,
                         2 * radius
                     );
@@ -239,7 +255,7 @@ namespace PolygonEditor
                         "p2",
                         new Font("Arial", 8),
                         Brushes.Azure,
-                        new Point(edge.p2.X, edge.p2.Y)
+                        new Point((int)edge.p2.X, (int)edge.p2.Y)
                     );
                     //ConnectBezier(edge, e.Graphics);
                 }
@@ -249,8 +265,8 @@ namespace PolygonEditor
                 int radius = 5;
                 e.Graphics.FillEllipse(
                     Brushes.Red,
-                    vertex.X - radius,
-                    vertex.Y - radius,
+                    (int)vertex.X - radius,
+                    (int)vertex.Y - radius,
                     2 * radius,
                     2 * radius
                 );

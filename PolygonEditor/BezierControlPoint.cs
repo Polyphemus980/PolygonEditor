@@ -8,10 +8,10 @@ namespace PolygonEditor
 {
     public class BezierControlPoint
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
 
-        public BezierControlPoint(int x, int y)
+        public BezierControlPoint(double x, double y)
         {
             this.X = x;
             this.Y = y;
