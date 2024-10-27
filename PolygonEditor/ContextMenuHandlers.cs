@@ -80,8 +80,11 @@ namespace PolygonEditor
             {
                 if (vertices[i].isNear(rightClickPosition))
                 {
-                    vertices[i].constraint = VertexConstraint.G0;
-                    EditingPanel.Invalidate();
+                    if (vertices[i].edges.Any((e) => e.constraint == EdgeConstraint.Bezier))
+                    {
+                        vertices[i].constraint = VertexConstraint.G0;
+                        EditingPanel.Invalidate();
+                    }
                     return;
                 }
             }
@@ -93,8 +96,11 @@ namespace PolygonEditor
             {
                 if (vertices[i].isNear(rightClickPosition))
                 {
-                    vertices[i].constraint = VertexConstraint.G1;
-                    EditingPanel.Invalidate();
+                    if (vertices[i].edges.Any((e) => e.constraint == EdgeConstraint.Bezier))
+                    {
+                        vertices[i].constraint = VertexConstraint.G1;
+                        EditingPanel.Invalidate();
+                    }
                     return;
                 }
             }
@@ -106,8 +112,11 @@ namespace PolygonEditor
             {
                 if (vertices[i].isNear(rightClickPosition))
                 {
-                    vertices[i].constraint = VertexConstraint.C1;
-                    EditingPanel.Invalidate();
+                    if (vertices[i].edges.Any((e) => e.constraint == EdgeConstraint.Bezier))
+                    {
+                        vertices[i].constraint = VertexConstraint.C1;
+                        EditingPanel.Invalidate();
+                    }
                     return;
                 }
             }

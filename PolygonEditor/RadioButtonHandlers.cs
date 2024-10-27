@@ -26,8 +26,15 @@ namespace PolygonEditor
             }
         }
 
-        private void SetConstraint(EdgeConstraint constraint)
+        private bool SetConstraint(EdgeConstraint constraint)
         {
+            Edge neighbor1 = selectedEdge.start.OtherEdge(selectedEdge);
+            Edge neighbor2 = selectedEdge.end.OtherEdge(selectedEdge);
+            if (
+                (constraint == EdgeConstraint.Vertical || constraint == EdgeConstraint.Horizontal)
+                && (neighbor1.constraint == constraint || neighbor2.constraint == constraint)
+            )
+                return false;
             selectedEdge.constraint = constraint;
             textBox1.Clear();
             if (selectedEdge.constraint != EdgeConstraint.Bezier)
@@ -65,20 +72,27 @@ namespace PolygonEditor
                         (selectedEdge.start.Y + selectedEdge.end.Y) / 2
                         + Math.Min(20, selectedEdge.length / 3);
                     if (selectedEdge.start.constraint == VertexConstraint.None)
-                        selectedEdge.start.constraint = VertexConstraint.G0;
+                        selectedEdge.start.constraint = VertexConstraint.G1;
                     if (selectedEdge.end.constraint == VertexConstraint.None)
-                        selectedEdge.end.constraint = VertexConstraint.G0;
+                        selectedEdge.end.constraint = VertexConstraint.G1;
                     selectedEdge.p1 = new BezierControlPoint(pos1X, pos1Y);
                     selectedEdge.p2 = new BezierControlPoint(pos2X, pos2Y);
+                    MoveVertexAPI(selectedEdge.start, selectedEdge.start.X, selectedEdge.start.Y);
                     break;
             }
             EditingPanel.Invalidate();
+            return true;
         }
 
         private void verticalRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (verticalRadioButton.Checked && selectedEdge.constraint != EdgeConstraint.Vertical)
-                SetConstraint(EdgeConstraint.Vertical);
+            {
+                if (!SetConstraint(EdgeConstraint.Vertical))
+                {
+                    clearButton_Click(sender, e);
+                }
+            }
         }
 
         private void horizontalRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -87,7 +101,12 @@ namespace PolygonEditor
                 horizontalRadioButton.Checked
                 && selectedEdge.constraint != EdgeConstraint.Horizontal
             )
-                SetConstraint(EdgeConstraint.Horizontal);
+            {
+                if (!SetConstraint(EdgeConstraint.Horizontal))
+                {
+                    clearButton_Click(sender, e);
+                }
+            }
         }
 
         private void constantRadioButton_CheckedChanged(object sender, EventArgs e)

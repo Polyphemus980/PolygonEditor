@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -87,8 +88,16 @@ namespace PolygonEditor
                         {
                             int dx = v.X - prev.X;
                             int dy = v.Y - prev.Y;
-                            adjustedPoint.X = (int)(prev.X - 0.5 * dx);
-                            adjustedPoint.Y = (int)(prev.Y - 0.5 * dy);
+                            Vector2 normalizedVector = Vector2.Normalize(new Vector2(dx, dy));
+                            int distance = (int)
+                                Math.Round(
+                                    Vector2.Distance(
+                                        new Vector2(prev.X, prev.Y),
+                                        new Vector2(adjustedPoint.X, adjustedPoint.Y)
+                                    )
+                                );
+                            adjustedPoint.X = (int)(prev.X - distance * normalizedVector.X); //0.5 * dx);
+                            adjustedPoint.Y = (int)(prev.Y - distance * normalizedVector.Y); //0.5 * dy);
                         }
                         if (
                             e.constraint == EdgeConstraint.Bezier
