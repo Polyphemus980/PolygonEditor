@@ -15,3 +15,4 @@ C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows
 C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\PolygonEditor.genruntimeconfig.cache
 C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\ref\PolygonEditor.dll
 C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\PolygonEditor.sourcelink.json
+C:\Users\aleks\source\repos\PolygonEditor\PolygonEditor\obj\Debug\net8.0-windows\PolygonEditor.TutorialForm.resources

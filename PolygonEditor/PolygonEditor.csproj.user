@@ -16,5 +16,8 @@
     <Compile Update="RadioButtonHandlers.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="TutorialForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

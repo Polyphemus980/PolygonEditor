@@ -31,6 +31,8 @@ namespace PolygonEditor
 
         private void removeVertex_Click(object sender, EventArgs e)
         {
+            if (edges.Count <= 3)
+                return;
             Vertex? selectedVertex = null;
             for (int i = 0; i < vertices.Count; i++)
             {

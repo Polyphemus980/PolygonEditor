@@ -27,7 +27,8 @@ namespace PolygonEditor
 
         private void DrawLineLibrary(Point start, Point end, Graphics g, Color color)
         {
-            Pen pen = new Pen(color, 5);
+            Pen pen = new Pen(color, 1);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
             g.DrawLine(pen, start, end);
         }
 
@@ -63,8 +64,8 @@ namespace PolygonEditor
         {
             Pen pen = new Pen(color, 1);
             double length = Math.Sqrt((x1 - x4) * (x1 - x4) + (y1 - y4) * (y1 - y4));
-            int numberOfSteps = (int)(length / 10);
-            float d = 1 / 1000f;
+            int numberOfSteps = (int)(length * 2);
+            float d = 1f / numberOfSteps;
             Vector2 A0 = new Vector2(x1, y1);
             Vector2 A1 = new Vector2(3 * (x2 - x1), 3 * (y2 - y1));
             Vector2 A2 = new Vector2(3 * (x3 - 2 * x2 + x1), 3 * (y3 - 2 * y2 + y1));
@@ -76,7 +77,7 @@ namespace PolygonEditor
             Vector2 deltaP2 = 6 * A3 * d * d * d + 2 * A2 * d * d;
             Vector2 deltaP3 = 6 * A3 * d * d * d;
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < numberOfSteps; i++)
             {
                 bezierPoints.Add(new Point((int)currentPoint.X, (int)currentPoint.Y));
                 currentPoint = currentPoint + deltaP;
@@ -257,7 +258,7 @@ namespace PolygonEditor
                         Brushes.Azure,
                         new Point((int)edge.p2.X, (int)edge.p2.Y)
                     );
-                    //ConnectBezier(edge, e.Graphics);
+                    ConnectBezier(edge, e.Graphics);
                 }
             }
             foreach (var vertex in vertices)

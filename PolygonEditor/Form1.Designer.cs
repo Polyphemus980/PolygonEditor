@@ -36,11 +36,11 @@
             g0ToolStripMenuItem = new ToolStripMenuItem();
             g1ToolStripMenuItem = new ToolStripMenuItem();
             c1ToolStripMenuItem = new ToolStripMenuItem();
-            menuStrip1 = new MenuStrip();
-            polygonToolStripMenuItem = new ToolStripMenuItem();
-            newPolygon = new ToolStripMenuItem();
-            removePolygon = new ToolStripMenuItem();
             tableLayoutPanel1 = new TableLayoutPanel();
+            groupBox3 = new GroupBox();
+            ImplementationButton = new Button();
+            tutorialButton = new Button();
+            newPolygonButton = new Button();
             groupBox1 = new GroupBox();
             LibraryButton = new RadioButton();
             label1 = new Label();
@@ -56,8 +56,8 @@
             EditingPanel = new Panel();
             tableLayoutPanel2 = new TableLayoutPanel();
             contextMenu.SuspendLayout();
-            menuStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            groupBox3.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -68,7 +68,7 @@
             contextMenu.ImageScalingSize = new Size(20, 20);
             contextMenu.Items.AddRange(new ToolStripItem[] { addVertexToolStripMenuItem, removeVertexToolStripMenuItem, addVertexConstraintToolStripMenuItem });
             contextMenu.Name = "contextMenu";
-            contextMenu.Size = new Size(229, 104);
+            contextMenu.Size = new Size(229, 76);
             // 
             // addVertexToolStripMenuItem
             // 
@@ -94,68 +94,83 @@
             // g0ToolStripMenuItem
             // 
             g0ToolStripMenuItem.Name = "g0ToolStripMenuItem";
-            g0ToolStripMenuItem.Size = new Size(224, 26);
+            g0ToolStripMenuItem.Size = new Size(110, 26);
             g0ToolStripMenuItem.Text = "G0";
             g0ToolStripMenuItem.Click += g0ToolStripMenuItem_Click;
             // 
             // g1ToolStripMenuItem
             // 
             g1ToolStripMenuItem.Name = "g1ToolStripMenuItem";
-            g1ToolStripMenuItem.Size = new Size(224, 26);
+            g1ToolStripMenuItem.Size = new Size(110, 26);
             g1ToolStripMenuItem.Text = "G1";
             g1ToolStripMenuItem.Click += g1ToolStripMenuItem_Click;
             // 
             // c1ToolStripMenuItem
             // 
             c1ToolStripMenuItem.Name = "c1ToolStripMenuItem";
-            c1ToolStripMenuItem.Size = new Size(224, 26);
+            c1ToolStripMenuItem.Size = new Size(110, 26);
             c1ToolStripMenuItem.Text = "C1";
             c1ToolStripMenuItem.Click += c1ToolStripMenuItem_Click;
-            // 
-            // menuStrip1
-            // 
-            menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { polygonToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1131, 28);
-            menuStrip1.TabIndex = 1;
-            menuStrip1.Text = "menuStrip1";
-            // 
-            // polygonToolStripMenuItem
-            // 
-            polygonToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newPolygon, removePolygon });
-            polygonToolStripMenuItem.Name = "polygonToolStripMenuItem";
-            polygonToolStripMenuItem.Size = new Size(76, 24);
-            polygonToolStripMenuItem.Text = "Polygon";
-            // 
-            // newPolygon
-            // 
-            newPolygon.Name = "newPolygon";
-            newPolygon.Size = new Size(224, 26);
-            newPolygon.Text = "New";
-            newPolygon.Click += newPolygon_Click;
-            // 
-            // removePolygon
-            // 
-            removePolygon.Name = "removePolygon";
-            removePolygon.Size = new Size(224, 26);
-            removePolygon.Text = "Remove";
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(groupBox3, 0, 2);
             tableLayoutPanel1.Controls.Add(groupBox1, 0, 0);
             tableLayoutPanel1.Controls.Add(groupBox2, 0, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(884, 3);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowCount = 3;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 150F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(244, 487);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 147F));
+            tableLayoutPanel1.Size = new Size(244, 515);
             tableLayoutPanel1.TabIndex = 4;
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(ImplementationButton);
+            groupBox3.Controls.Add(tutorialButton);
+            groupBox3.Controls.Add(newPolygonButton);
+            groupBox3.Dock = DockStyle.Fill;
+            groupBox3.Location = new Point(3, 371);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(238, 141);
+            groupBox3.TabIndex = 3;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Other";
+            // 
+            // ImplementationButton
+            // 
+            ImplementationButton.Location = new Point(6, 106);
+            ImplementationButton.Name = "ImplementationButton";
+            ImplementationButton.Size = new Size(185, 29);
+            ImplementationButton.TabIndex = 9;
+            ImplementationButton.Text = "Implementation details";
+            ImplementationButton.UseVisualStyleBackColor = true;
+            ImplementationButton.Click += ImplementationButton_Click;
+            // 
+            // tutorialButton
+            // 
+            tutorialButton.Location = new Point(6, 71);
+            tutorialButton.Name = "tutorialButton";
+            tutorialButton.Size = new Size(185, 29);
+            tutorialButton.TabIndex = 8;
+            tutorialButton.Text = "Tutorial";
+            tutorialButton.UseVisualStyleBackColor = true;
+            tutorialButton.Click += tutorialButton_Click;
+            // 
+            // newPolygonButton
+            // 
+            newPolygonButton.Location = new Point(6, 26);
+            newPolygonButton.Name = "newPolygonButton";
+            newPolygonButton.Size = new Size(185, 29);
+            newPolygonButton.TabIndex = 7;
+            newPolygonButton.Text = "New polygon";
+            newPolygonButton.UseVisualStyleBackColor = true;
+            newPolygonButton.Click += newPolygonButton_Click;
             // 
             // groupBox1
             // 
@@ -217,7 +232,7 @@
             groupBox2.Dock = DockStyle.Fill;
             groupBox2.Location = new Point(3, 153);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(238, 331);
+            groupBox2.Size = new Size(238, 212);
             groupBox2.TabIndex = 4;
             groupBox2.TabStop = false;
             // 
@@ -243,7 +258,7 @@
             // 
             // clearButton
             // 
-            clearButton.Location = new Point(18, 175);
+            clearButton.Location = new Point(6, 174);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(185, 29);
             clearButton.TabIndex = 4;
@@ -303,9 +318,10 @@
             EditingPanel.Dock = DockStyle.Fill;
             EditingPanel.Location = new Point(3, 3);
             EditingPanel.Name = "EditingPanel";
-            EditingPanel.Size = new Size(875, 487);
+            EditingPanel.Size = new Size(875, 515);
             EditingPanel.TabIndex = 0;
             EditingPanel.Paint += EditingPanel_Paint;
+            EditingPanel.MouseClick += EditingPanel_MouseClick;
             EditingPanel.MouseDoubleClick += EditingPanel_MouseDoubleClick;
             EditingPanel.MouseDown += EditingPanel_MouseDown;
             EditingPanel.MouseMove += EditingPanel_MouseMove;
@@ -319,11 +335,11 @@
             tableLayoutPanel2.Controls.Add(tableLayoutPanel1, 1, 0);
             tableLayoutPanel2.Controls.Add(EditingPanel, 0, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(0, 28);
+            tableLayoutPanel2.Location = new Point(0, 0);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(1131, 493);
+            tableLayoutPanel2.Size = new Size(1131, 521);
             tableLayoutPanel2.TabIndex = 3;
             // 
             // Form1
@@ -332,28 +348,20 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1131, 521);
             Controls.Add(tableLayoutPanel2);
-            Controls.Add(menuStrip1);
-            MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Form1";
             contextMenu.ResumeLayout(false);
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
+            groupBox3.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-        private MenuStrip menuStrip1;
-        private ToolStripMenuItem polygonToolStripMenuItem;
-        private ToolStripMenuItem newPolygon;
-        private ToolStripMenuItem removePolygon;
         private ContextMenuStrip contextMenu;
         private ToolStripMenuItem addVertexToolStripMenuItem;
         private ToolStripMenuItem removeVertexToolStripMenuItem;
@@ -376,5 +384,9 @@
         private ToolStripMenuItem g0ToolStripMenuItem;
         private ToolStripMenuItem g1ToolStripMenuItem;
         private ToolStripMenuItem c1ToolStripMenuItem;
+        private Button newPolygonButton;
+        private GroupBox groupBox3;
+        private Button ImplementationButton;
+        private Button tutorialButton;
     }
 }

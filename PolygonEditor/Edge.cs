@@ -84,7 +84,7 @@ namespace PolygonEditor
             return distSq < threshold * threshold;
         }
 
-        public void MoveBezierIteratively(BezierControlPoint cp, int x, int y)
+        public void MoveBezier(BezierControlPoint cp, int x, int y)
         {
             cp.X = x;
             cp.Y = y;
@@ -108,6 +108,7 @@ namespace PolygonEditor
                 else
                 {
                     Vertex v = otherEdge.OtherVertex(closerVertex);
+
                     double dx = v.X - cp.X;
                     double dy = v.Y - cp.Y;
                     Vector2 normalizedVector = Vector2.Normalize(new Vector2((float)dx, (float)dy));

@@ -56,7 +56,7 @@ namespace PolygonEditor
 
         private void EditingPanel_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isDragging)
+            if (isDragging && !newPolygonMode)
             {
                 Vertex currentVertex = vertices[draggedVertexIndex];
                 if (Control.ModifierKeys == Keys.Control)
@@ -77,7 +77,7 @@ namespace PolygonEditor
             }
             else if (isDraggingBezier)
             {
-                edges[draggedBezierEdgeIndex].MoveBezierIteratively(draggedBezier, e.X, e.Y);
+                edges[draggedBezierEdgeIndex].MoveBezier(draggedBezier, e.X, e.Y);
                 EditingPanel.Invalidate();
             }
         }
